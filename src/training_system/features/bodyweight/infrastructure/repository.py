@@ -28,7 +28,9 @@ class SqlBodyWeightRepository(BodyWeightRepository):
             .order_by(col(BodyWeightEntryModel.date).desc())
         )
         models = (await self._session.scalars(statement)).all()
-        return [BodyWeightEntry(date=model.date, weight=model.weight) for model in models]
+        return [
+            BodyWeightEntry(date=model.date, weight=model.weight) for model in models
+        ]
 
     async def upsert_entry(
         self, *, user_id: UUID, entry: BodyWeightEntry

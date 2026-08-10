@@ -23,7 +23,9 @@ def set_session_cookie(
     )
 
 
-def clear_session_cookie(response: Response, *, settings: AuthenticationSettings) -> None:
+def clear_session_cookie(
+    response: Response, *, settings: AuthenticationSettings
+) -> None:
     response.delete_cookie(
         key=settings.cookie_name,
         path="/",

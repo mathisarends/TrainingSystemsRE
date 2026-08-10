@@ -1,4 +1,4 @@
-"""Central table registration point (see database.md#table-placement-and-registration)."""
+"""Central table registration point (see database.md#table-placement)."""
 
 from datetime import UTC, date, datetime
 from uuid import UUID

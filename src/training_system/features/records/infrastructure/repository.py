@@ -3,7 +3,7 @@ from uuid import UUID
 
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlmodel import select
+from sqlmodel import col, select
 
 from training_system.features.records.domain.entities import (
     PersonalRecord,
@@ -32,8 +32,8 @@ def _history_to_json(history: list[RecordSnapshot]) -> list[dict[str, object]]:
 def _history_from_json(raw: list[dict[str, object]]) -> list[RecordSnapshot]:
     return [
         RecordSnapshot(
-            sets=int(item["sets"]),  # type: ignore[arg-type]
-            reps=int(item["reps"]),  # type: ignore[arg-type]
+            sets=int(item["sets"]),  # type: ignore[call-overload]
+            reps=int(item["reps"]),  # type: ignore[call-overload]
             weight=float(item["weight"]),  # type: ignore[arg-type]
             actual_rpe=float(item["actual_rpe"]),  # type: ignore[arg-type]
             est_max=float(item["est_max"]),  # type: ignore[arg-type]
@@ -62,7 +62,7 @@ class SqlPersonalRecordRepository(PersonalRecordRepository):
 
     async def list_for_user(self, *, user_id: UUID) -> list[PersonalRecord]:
         statement = select(PersonalRecordModel).where(
-            PersonalRecordModel.user_id == user_id
+            col(PersonalRecordModel.user_id) == user_id
         )
         models = (await self._session.scalars(statement)).all()
         return [self._to_domain(model) for model in models]
@@ -71,8 +71,8 @@ class SqlPersonalRecordRepository(PersonalRecordRepository):
         self, *, user_id: UUID, exercise_name: str
     ) -> PersonalRecord | None:
         statement = select(PersonalRecordModel).where(
-            PersonalRecordModel.user_id == user_id,
-            PersonalRecordModel.exercise_name == exercise_name,
+            col(PersonalRecordModel.user_id) == user_id,
+            col(PersonalRecordModel.exercise_name) == exercise_name,
         )
         model = await self._session.scalar(statement)
         return self._to_domain(model) if model is not None else None
@@ -81,8 +81,8 @@ class SqlPersonalRecordRepository(PersonalRecordRepository):
         self, *, user_id: UUID, record: PersonalRecord
     ) -> PersonalRecord:
         statement = select(PersonalRecordModel).where(
-            PersonalRecordModel.user_id == user_id,
-            PersonalRecordModel.exercise_name == record.exercise_name,
+            col(PersonalRecordModel.user_id) == user_id,
+            col(PersonalRecordModel.exercise_name) == record.exercise_name,
         )
         existing = await self._session.scalar(statement)
         if existing is None:
@@ -104,8 +104,8 @@ class SqlPersonalRecordRepository(PersonalRecordRepository):
     async def delete(self, *, user_id: UUID, exercise_name: str) -> None:
         await self._session.execute(
             delete(PersonalRecordModel).where(
-                PersonalRecordModel.user_id == user_id,
-                PersonalRecordModel.exercise_name == exercise_name,
+                col(PersonalRecordModel.user_id) == user_id,
+                col(PersonalRecordModel.exercise_name) == exercise_name,
             )
         )
         await self._session.flush()

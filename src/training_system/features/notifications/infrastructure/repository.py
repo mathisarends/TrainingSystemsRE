@@ -3,7 +3,7 @@ from uuid import UUID
 
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlmodel import select
+from sqlmodel import col, select
 
 from training_system.features.notifications.domain.entities import UnseenCompletion
 from training_system.features.notifications.domain.repository import (
@@ -43,7 +43,7 @@ class SqlUnseenCompletionRepository(UnseenCompletionRepository):
         existing = await self.list_for_user(user_id=user_id)
         await self._session.execute(
             delete(UnseenCompletionModel).where(
-                UnseenCompletionModel.user_id == user_id
+                col(UnseenCompletionModel.user_id) == user_id
             )
         )
         await self._session.flush()

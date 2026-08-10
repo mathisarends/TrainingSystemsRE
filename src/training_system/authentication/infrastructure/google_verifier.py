@@ -19,7 +19,7 @@ class GoogleIdentityVerifier(IdentityVerifier):
         self._request = google_requests.Request()
 
     def verify(self, *, credential: str) -> VerifiedIdentity:
-        claims = google_id_token.verify_oauth2_token(
+        claims = google_id_token.verify_oauth2_token(  # type: ignore[no-untyped-call]
             credential, self._request, self._settings.google_client_id
         )
         subject = claims.get("sub")

@@ -200,7 +200,7 @@ class SqlPlanRepository(PlanRepository):
             delete(PlanDayModel).where(col(PlanDayModel.week_id).in_(week_ids))
         )
         await self._session.execute(
-            delete(PlanWeekModel).where(PlanWeekModel.plan_id == plan_id)
+            delete(PlanWeekModel).where(col(PlanWeekModel.plan_id) == plan_id)
         )
 
     async def delete(self, *, plan_id: UUID, user_id: UUID) -> bool:
@@ -222,11 +222,11 @@ class SqlPlanRepository(PlanRepository):
         statement = (
             select(func.avg(PlanDayModel.duration_minutes))
             .select_from(PlanDayModel)
-            .join(PlanWeekModel, PlanWeekModel.id == PlanDayModel.week_id)
+            .join(PlanWeekModel, col(PlanWeekModel.id) == PlanDayModel.week_id)
             .where(
-                PlanWeekModel.plan_id == plan_id,
+                col(PlanWeekModel.plan_id) == plan_id,
                 col(PlanDayModel.duration_minutes).is_not(None),
-                PlanDayModel.duration_minutes != 0,
+                col(PlanDayModel.duration_minutes) != 0,
             )
         )
         result = await self._session.scalar(statement)

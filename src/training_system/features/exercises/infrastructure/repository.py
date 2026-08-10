@@ -1,7 +1,7 @@
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlmodel import delete, select
+from sqlmodel import col, delete, select
 
 from training_system.features.exercises.domain.entities import (
     CatalogExercise,
@@ -65,12 +65,12 @@ class SqlExerciseCatalogRepository(ExerciseCatalogRepository):
     async def replace(self, *, catalog: ExerciseCatalog) -> ExerciseCatalog:
         await self._session.execute(
             delete(ExerciseCategoryModel).where(
-                ExerciseCategoryModel.user_id == catalog.user_id
+                col(ExerciseCategoryModel.user_id) == catalog.user_id
             )
         )
         await self._session.execute(
             delete(CatalogExerciseModel).where(
-                CatalogExerciseModel.user_id == catalog.user_id
+                col(CatalogExerciseModel.user_id) == catalog.user_id
             )
         )
         for category in catalog.categories:

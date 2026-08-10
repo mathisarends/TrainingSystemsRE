@@ -3,7 +3,7 @@ from datetime import UTC, datetime, timedelta
 from uuid import UUID
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlmodel import select
+from sqlmodel import col, select
 
 from training_system.authentication.application.ports import Session, SessionStore
 from training_system.authentication.application.principal import (
@@ -46,5 +46,6 @@ class SqlSessionStore(SessionStore):
             await self._session.flush()
 
     async def _find(self, token: str) -> SessionModel | None:
-        statement = select(SessionModel).where(SessionModel.token == token)
-        return await self._session.scalar(statement)
+        statement = select(SessionModel).where(col(SessionModel.token) == token)
+        model = await self._session.scalar(statement)
+        return model

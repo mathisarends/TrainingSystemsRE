@@ -24,7 +24,9 @@ RESPONSES: dict[int | str, dict[str, Any]] = {
     status.HTTP_401_UNAUTHORIZED: {"model": ErrorResponse},
 }
 
-router = APIRouter(prefix="/me/bodyweight", tags=["bodyweight"], route_class=DishkaRoute)
+router = APIRouter(
+    prefix="/me/bodyweight", tags=["bodyweight"], route_class=DishkaRoute
+)
 
 
 @router.get(

@@ -43,7 +43,9 @@ class ExerciseCatalogService:
     ) -> ExerciseCatalog:
         catalog = await self.get_catalog(user_id=user_id)
 
-        categories_by_name = {category.category: category for category in catalog.categories}
+        categories_by_name = {
+            category.category: category for category in catalog.categories
+        }
         for update in category_updates:
             current = categories_by_name.get(update.category)
             if current is None:

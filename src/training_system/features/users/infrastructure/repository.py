@@ -31,7 +31,9 @@ class SqlUserRepository(SqlRepository[UserModel, User], UserRepository):
             picture_url=entity.picture_url,
         )
 
-    async def find_by_id(self, *, user_id: UUID) -> User | None:
+    async def find_by_id(  # type: ignore[override]
+        self, *, user_id: UUID
+    ) -> User | None:
         model = await self._session.get(self._model, user_id)
         return self.to_domain(model) if model is not None else None
 

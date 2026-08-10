@@ -1,6 +1,9 @@
 from uuid import UUID
 
-from training_system.features.push.domain import PushSubscription, PushSubscriptionRepository
+from training_system.features.push.domain import (
+    PushSubscription,
+    PushSubscriptionRepository,
+)
 
 
 class PushSubscriptionService:

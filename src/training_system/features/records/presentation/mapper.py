@@ -37,4 +37,6 @@ def to_list_response(records: list[PersonalRecord]) -> PersonalRecordListRespons
 
 
 def to_upsert_response(result: UpsertResult) -> UpsertRecordResponse:
-    return UpsertRecordResponse(record=to_response(result.record), accepted=result.accepted)
+    return UpsertRecordResponse(
+        record=to_response(result.record), accepted=result.accepted
+    )
