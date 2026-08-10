@@ -1,0 +1,2 @@
+class ExerciseCatalogNotFound(Exception):
+    pass

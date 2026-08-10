@@ -1,0 +1,91 @@
+"""The fixed set of selectable exercise categories and their default catalog.
+
+Transcribed from Features.md's default-catalog table (the internal
+"- Bitte Auswählen -" placeholder is intentionally excluded).
+"""
+
+from training_system.features.exercises.domain.entities import CategoryDefaults
+
+AVAILABLE_CATEGORIES: tuple[str, ...] = (
+    "Squat",
+    "Bench",
+    "Deadlift",
+    "Overheadpress",
+    "Chest",
+    "Back",
+    "Shoulder",
+    "Triceps",
+    "Biceps",
+    "Legs",
+)
+
+DEFAULT_CATEGORY_DEFAULTS: tuple[CategoryDefaults, ...] = (
+    CategoryDefaults("Squat", 240, 3, 7, 7.5),
+    CategoryDefaults("Bench", 180, 4, 8, 8.0),
+    CategoryDefaults("Deadlift", 240, 3, 6, 7.0),
+    CategoryDefaults("Overheadpress", 150, 3, 10, 8.5),
+    CategoryDefaults("Chest", 120, 3, 12, 8.5),
+    CategoryDefaults("Back", 120, 3, 12, 8.5),
+    CategoryDefaults("Shoulder", 90, 3, 12, 8.5),
+    CategoryDefaults("Triceps", 90, 3, 12, 8.5),
+    CategoryDefaults("Biceps", 90, 3, 12, 8.5),
+    CategoryDefaults("Legs", 120, 3, 12, 8.5),
+)
+
+# (category, name, max_factor)
+DEFAULT_EXERCISES: tuple[tuple[str, str, float | None], ...] = (
+    ("Squat", "Lowbar - Squat", None),
+    ("Squat", "Highbar - Squat", None),
+    ("Squat", "Paused Squat", 0.875),
+    ("Squat", "Tempo Squat (3:1:0)", 0.875),
+    ("Squat", "Hack-Squat", 1.5),
+    ("Squat", "Bulgurian Split Squats", 0.0),
+    ("Squat", "Legpress", 2.0),
+    ("Bench", "Comp. Bench", None),
+    ("Bench", "Larsen Press", 0.95),
+    ("Bench", "Close Grip Bench", 0.95),
+    ("Bench", "Spoto Bench", None),
+    ("Bench", "Tempo Bench", 0.95),
+    ("Bench", "3ct Pause Bench", 0.95),
+    ("Bench", "Chestpress", 1.1),
+    ("Bench", "Incline Press", 1.1),
+    ("Deadlift", "Conventional", None),
+    ("Deadlift", "Sumo", None),
+    ("Deadlift", "Paused Deadlift", 0.9),
+    ("Deadlift", "Deficit Deadlift", 0.9),
+    ("Deadlift", "RDLs", 0.825),
+    ("Deadlift", "B-Stance RDLs", 0.0),
+    ("Deadlift", "Stiff-Leg DL", 0.825),
+    ("Overheadpress", "Overheadpress", None),
+    ("Overheadpress", "Push-Press", None),
+    ("Overheadpress", "Dumbell Overheadpress", None),
+    ("Overheadpress", "Shoulderpress", None),
+    ("Chest", "Dips", None),
+    ("Chest", "Butterfly", None),
+    ("Chest", "Deficit Pushups", None),
+    ("Back", "Pull-Up", None),
+    ("Back", "Dumbell Row", None),
+    ("Back", "Pulldowns (wide-grip)", None),
+    ("Back", "Pulldowns (close-grip)", None),
+    ("Back", "T-Bar Row", None),
+    ("Back", "Chestsupported Row", None),
+    ("Shoulder", "Reverse Flyes", None),
+    ("Shoulder", "Lateral Raise", None),
+    ("Shoulder", "Facepulls", None),
+    ("Shoulder", "Upright Rows", None),
+    ("Shoulder", "Front-Raises", None),
+    ("Triceps", "Triceps-Extensions", None),
+    ("Triceps", "French-Press Flat", None),
+    ("Triceps", "Cable-Pushdowns", None),
+    ("Triceps", "Diamond Pushups", None),
+    ("Biceps", "Biceps-Curls", None),
+    ("Biceps", "Cable Curls", None),
+    ("Biceps", "Hammer Curls", None),
+    ("Legs", "Hip Thrusts", None),
+    ("Legs", "Hyperextensions", None),
+    ("Legs", "Leg Extension", None),
+    ("Legs", "Leg Curl", None),
+    ("Legs", "Calf Raises", None),
+    ("Legs", "Hip Adduction", None),
+    ("Legs", "Hip Abduction", None),
+)
