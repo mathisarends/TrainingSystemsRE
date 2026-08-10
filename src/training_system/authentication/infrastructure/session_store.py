@@ -35,7 +35,12 @@ class SqlSessionStore(SessionStore):
 
     async def get(self, *, token: str) -> AuthenticatedPrincipal | None:
         model = await self._find(token)
-        if model is None or model.expires_at < datetime.now(UTC):
+        if model is None:
+            return None
+        expires_at = model.expires_at
+        if expires_at.tzinfo is None:
+            expires_at = expires_at.replace(tzinfo=UTC)
+        if expires_at < datetime.now(UTC):
             return None
         return AuthenticatedPrincipal(user_id=model.user_id)
 
