@@ -32,12 +32,12 @@ class WebPushSender(PushSender):
         self._session_factory = session_factory
         self._settings = settings
 
-    async def send(self, *, user_id: UUID, message: PushMessage) -> None:
+    async def send(self, *, user_id: UUID, message: PushMessage) -> bool:
         async with self._session_factory() as session:
             repository = SqlPushSubscriptionRepository(session)
             subscription = await repository.find_by_user(user_id=user_id)
             if subscription is None:
-                return
+                return False
 
             payload = {key: value for key, value in asdict(message).items() if value}
             try:
@@ -54,14 +54,17 @@ class WebPushSender(PushSender):
                     vapid_private_key=self._settings.vapid_private_key.get_secret_value(),
                     vapid_claims={"sub": self._settings.vapid_subject},
                 )
+                return True
             except WebPushException as error:
                 if error.response is not None and error.response.status_code == _GONE:
                     await repository.delete(user_id=user_id)
                     await session.commit()
                 else:
                     logger.warning("Push delivery failed for user %s", user_id)
+                return False
             except Exception:  # noqa: BLE001
                 logger.exception("Unexpected push delivery error for user %s", user_id)
+                return False
 
 
 def _encode(payload: dict[str, object]) -> str:
