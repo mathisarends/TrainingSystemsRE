@@ -170,7 +170,9 @@ class Plan(Aggregate):
             self._cover_image = cover_image
 
         new_weekdays = weekdays if weekdays is not None else self._weekdays
-        new_block_length = block_length if block_length is not None else self._block_length
+        new_block_length = (
+            block_length if block_length is not None else self._block_length
+        )
         if new_weekdays != self._weekdays or new_block_length != self._block_length:
             self._weekdays = new_weekdays
             self._resize(block_length=new_block_length, day_count=len(new_weekdays))
@@ -217,7 +219,10 @@ class Plan(Aggregate):
         for edit in entries:
             existing = existing_by_id.get(edit.id) if edit.id is not None else None
             if existing is not None:
-                if edit.weight != existing.weight or edit.actual_rpe != existing.actual_rpe:
+                if (
+                    edit.weight != existing.weight
+                    or edit.actual_rpe != existing.actual_rpe
+                ):
                     activity = True
             elif edit.weight is not None or edit.actual_rpe is not None:
                 activity = True
@@ -237,7 +242,9 @@ class Plan(Aggregate):
             )
 
         day.entries = new_entries
-        self._propagate_structure(week_index=week_index, day_index=day_index, entries=new_entries)
+        self._propagate_structure(
+            week_index=week_index, day_index=day_index, entries=new_entries
+        )
         self._last_used_week_index = week_index
         self._last_used_day_index = day_index
         self._touch()
@@ -273,7 +280,9 @@ class Plan(Aggregate):
                 )
             future_day.entries = propagated
 
-    def apply_progression(self, *, rpe_increment: float, deload_last_week: bool) -> None:
+    def apply_progression(
+        self, *, rpe_increment: float, deload_last_week: bool
+    ) -> None:
         last_week_index = len(self._weeks) - 1
         for week_index in range(1, len(self._weeks)):
             week = self._weeks[week_index]
@@ -315,7 +324,8 @@ class Plan(Aggregate):
         )
         active_minutes = max(0.0, elapsed_minutes - DEFAULT_INACTIVITY_MINUTES)
         rounded = (
-            round(active_minutes / DURATION_ROUNDING_MINUTES) * DURATION_ROUNDING_MINUTES
+            round(active_minutes / DURATION_ROUNDING_MINUTES)
+            * DURATION_ROUNDING_MINUTES
         )
         day.duration_minutes = int(rounded)
         day.is_recording = False

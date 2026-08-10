@@ -35,10 +35,15 @@ class ApSchedulerSessionTracker(SessionTracker):
     async def touch(
         self, *, user_id: UUID, plan_id: UUID, week_index: int, day_index: int
     ) -> None:
-        job_id = self._job_id(plan_id=plan_id, week_index=week_index, day_index=day_index)
+        job_id = self._job_id(
+            plan_id=plan_id, week_index=week_index, day_index=day_index
+        )
         if self._scheduler.get_job(job_id) is None:
             await self._start_recording(
-                user_id=user_id, plan_id=plan_id, week_index=week_index, day_index=day_index
+                user_id=user_id,
+                plan_id=plan_id,
+                week_index=week_index,
+                day_index=day_index,
             )
         self._scheduler.add_job(
             self._close_recording,
