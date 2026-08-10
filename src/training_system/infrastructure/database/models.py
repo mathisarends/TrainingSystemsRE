@@ -1,13 +1,14 @@
 from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
-from sqlalchemy import Column, DateTime
+from sqlalchemy import DateTime
 from sqlmodel import Field, SQLModel
 
 
 class DatabaseModel(SQLModel):
     id: UUID = Field(default_factory=uuid4, primary_key=True)
-    created_at: datetime = Field(
+    created_at: datetime = Field(  # type: ignore[call-overload]
         default_factory=lambda: datetime.now(UTC),
-        sa_column=Column(DateTime(timezone=True), nullable=False),
+        sa_type=DateTime(timezone=True),
+        nullable=False,
     )
