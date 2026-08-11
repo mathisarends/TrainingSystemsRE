@@ -3,7 +3,12 @@ from .categories import (
     DEFAULT_CATEGORY_DEFAULTS,
     DEFAULT_EXERCISES,
 )
-from .entities import CatalogExercise, CategoryDefaults, ExerciseCatalog
+from .entities import (
+    CatalogExercise,
+    CategoryDefaults,
+    ExerciseCatalog,
+    ExerciseCategory,
+)
 from .repository import ExerciseCatalogRepository
 
 __all__ = [
@@ -13,5 +18,6 @@ __all__ = [
     "CatalogExercise",
     "CategoryDefaults",
     "ExerciseCatalog",
+    "ExerciseCategory",
     "ExerciseCatalogRepository",
 ]

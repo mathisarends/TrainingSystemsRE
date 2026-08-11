@@ -5,11 +5,12 @@ from training_system.features.exercises.domain import (
     DEFAULT_EXERCISES,
     CatalogExercise,
     ExerciseCatalog,
+    ExerciseCategory,
 )
 
 
 def build_default_catalog(*, user_id: UUID) -> ExerciseCatalog:
-    positions: dict[str, int] = {}
+    positions: dict[ExerciseCategory, int] = {}
     exercises: list[CatalogExercise] = []
     for category, name, max_factor in DEFAULT_EXERCISES:
         position = positions.get(category, 0)

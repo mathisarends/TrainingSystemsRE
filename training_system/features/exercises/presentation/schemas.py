@@ -2,11 +2,12 @@ from uuid import UUID
 
 from pydantic import Field
 
+from training_system.features.exercises.domain import ExerciseCategory
 from training_system.presentation.schema import Schema
 
 
 class CategoryResponse(Schema):
-    category: str
+    category: ExerciseCategory
     rest_seconds: int
     default_sets: int
     default_reps: int
@@ -21,11 +22,11 @@ class ExerciseResponse(Schema):
 
 class ExerciseCatalogResponse(Schema):
     categories: list[CategoryResponse]
-    exercises_by_category: dict[str, list[ExerciseResponse]]
+    exercises_by_category: dict[ExerciseCategory, list[ExerciseResponse]]
 
 
 class CategoryUpdateRequest(Schema):
-    category: str
+    category: ExerciseCategory
     rest_seconds: int | None = Field(default=None, ge=0)
     default_sets: int | None = Field(default=None, ge=0)
     default_reps: int | None = Field(default=None, ge=0)
@@ -34,7 +35,7 @@ class CategoryUpdateRequest(Schema):
 
 class ExerciseUpsertRequest(Schema):
     id: UUID | None = None
-    category: str
+    category: ExerciseCategory
     name: str = ""
     max_factor: float | None = None
 

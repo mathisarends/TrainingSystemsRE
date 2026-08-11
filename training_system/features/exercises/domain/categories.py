@@ -4,23 +4,10 @@ Transcribed from Features.md's default-catalog table (the internal
 "- Bitte Auswählen -" placeholder is intentionally excluded).
 """
 
-from enum import StrEnum
-
-from training_system.features.exercises.domain.entities import CategoryDefaults
-
-
-class ExerciseCategory(StrEnum):
-    SQUAT = "Squat"
-    BENCH = "Bench"
-    DEADLIFT = "Deadlift"
-    OVERHEADPRESS = "Overheadpress"
-    CHEST = "Chest"
-    BACK = "Back"
-    SHOULDER = "Shoulder"
-    TRICEPS = "Triceps"
-    BICEPS = "Biceps"
-    LEGS = "Legs"
-
+from training_system.features.exercises.domain.entities import (
+    CategoryDefaults,
+    ExerciseCategory,
+)
 
 AVAILABLE_CATEGORIES: tuple[ExerciseCategory, ...] = tuple(ExerciseCategory)
 

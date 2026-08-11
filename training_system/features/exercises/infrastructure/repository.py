@@ -7,6 +7,7 @@ from training_system.features.exercises.domain.entities import (
     CatalogExercise,
     CategoryDefaults,
     ExerciseCatalog,
+    ExerciseCategory,
 )
 from training_system.features.exercises.domain.repository import (
     ExerciseCatalogRepository,
@@ -42,7 +43,7 @@ class SqlExerciseCatalogRepository(ExerciseCatalogRepository):
             user_id=user_id,
             categories=[
                 CategoryDefaults(
-                    category=category.category,
+                    category=ExerciseCategory(category.category),
                     rest_seconds=category.rest_seconds,
                     default_sets=category.default_sets,
                     default_reps=category.default_reps,
@@ -53,7 +54,7 @@ class SqlExerciseCatalogRepository(ExerciseCatalogRepository):
             exercises=[
                 CatalogExercise(
                     id=exercise.id,
-                    category=exercise.category,
+                    category=ExerciseCategory(exercise.category),
                     name=exercise.name,
                     position=exercise.position,
                     max_factor=exercise.max_factor,

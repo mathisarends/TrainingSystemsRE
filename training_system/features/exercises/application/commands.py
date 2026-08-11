@@ -1,10 +1,12 @@
 from dataclasses import dataclass
 from uuid import UUID
 
+from training_system.features.exercises.domain import ExerciseCategory
+
 
 @dataclass(frozen=True, slots=True)
 class CategoryUpdate:
-    category: str
+    category: ExerciseCategory
     rest_seconds: int | None = None
     default_sets: int | None = None
     default_reps: int | None = None
@@ -13,7 +15,7 @@ class CategoryUpdate:
 
 @dataclass(frozen=True, slots=True)
 class ExerciseUpsert:
-    category: str
+    category: ExerciseCategory
     name: str
     id: UUID | None = None
     max_factor: float | None = None
