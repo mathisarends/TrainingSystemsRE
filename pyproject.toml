@@ -32,6 +32,7 @@ build-backend = "uv_build"
 
 [tool.uv.build-backend]
 module-name = "training_system"
+module-root = ""
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

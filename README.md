@@ -50,7 +50,7 @@ network with `DATABASE_URL=postgresql+asyncpg://training:training@localhost:5432
 ```bash
 uv run pytest       # httpx ASGITransport tests, in-memory SQLite, fake Google verifier
 uv run ruff check .
-uv run mypy --strict src/training_system
+uv run mypy --strict training_system
 ```
 
 ## Database migrations
@@ -65,7 +65,7 @@ uv run alembic upgrade head
 ## Project layout
 
 ```
-src/training_system/
+training_system/
 ├── main.py                 # assembles all features into one FastAPI app via Dishka
 ├── settings.py              # AppSettings, DatabaseSettings
 ├── domain/                  # shared Entity/Aggregate base
