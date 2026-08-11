@@ -1,38 +1,37 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from datetime import datetime
 from uuid import UUID
 
-from training_system.authentication.application.principal import (
-    AuthenticatedPrincipal,
+from training_system.authentication.application.schemas import (
+    AuthSession,
+    GoogleIdentity,
+    TokenPayload,
+    TokenType,
 )
 
 
-@dataclass(frozen=True, slots=True)
-class VerifiedIdentity:
-    subject: str
-    email: str
-    name: str
-    picture_url: str | None
-
-
-@dataclass(frozen=True, slots=True)
-class Session:
-    token: str
-    expires_at: datetime
-
-
-class IdentityVerifier(ABC):
+class GoogleOAuthProvider(ABC):
     @abstractmethod
-    def verify(self, *, credential: str) -> VerifiedIdentity: ...
-
-
-class SessionStore(ABC):
-    @abstractmethod
-    async def create(self, *, user_id: UUID) -> Session: ...
+    def build_authorization_url(self, *, state: str) -> str: ...
 
     @abstractmethod
-    async def get(self, *, token: str) -> AuthenticatedPrincipal | None: ...
+    async def exchange_code_for_identity(
+        self, *, authorization_code: str
+    ) -> GoogleIdentity: ...
+
+
+class TokenIssuer(ABC):
+    @abstractmethod
+    def create_session(self, *, user_id: UUID) -> AuthSession: ...
 
     @abstractmethod
-    async def delete(self, *, token: str) -> None: ...
+    def validate(
+        self, *, token: str, expected_type: TokenType = TokenType.ACCESS
+    ) -> TokenPayload: ...
+
+
+class PasswordHasher(ABC):
+    @abstractmethod
+    def hash(self, *, password: str) -> str: ...
+
+    @abstractmethod
+    def verify(self, *, password: str, password_hash: str) -> bool: ...

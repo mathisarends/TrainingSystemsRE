@@ -10,6 +10,7 @@ class AuthIdentity(Entity):
         user_id: UUID,
         provider: str,
         subject: str,
+        password_hash: str | None = None,
         id: UUID | None = None,
         created_time: datetime | None = None,
     ) -> None:
@@ -17,6 +18,7 @@ class AuthIdentity(Entity):
         self._user_id = user_id
         self._provider = provider
         self._subject = subject
+        self._password_hash = password_hash
 
     @property
     def user_id(self) -> UUID:
@@ -29,3 +31,7 @@ class AuthIdentity(Entity):
     @property
     def subject(self) -> str:
         return self._subject
+
+    @property
+    def password_hash(self) -> str | None:
+        return self._password_hash
