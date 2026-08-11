@@ -63,22 +63,22 @@ class PlanResponse(Schema):
     weeks: list[WeekResponse]
 
 
-class PlanCardResponse(Schema):
+class PlanSummaryResponse(Schema):
     id: UUID
     title: str
     block_length: int
     frequency: int
     updated_at: datetime
     cover_image: str
-    picture_url: str | None
+    owner_picture_url: str | None
     progress_percent: float
     average_duration_minutes: float | None
     last_used_week_index: int | None = None
     last_used_day_index: int | None = None
 
 
-class PlanCardListResponse(Schema):
-    items: list[PlanCardResponse]
+class PlanSummaryListResponse(Schema):
+    items: list[PlanSummaryResponse]
 
 
 class CreatePlanRequest(Schema):

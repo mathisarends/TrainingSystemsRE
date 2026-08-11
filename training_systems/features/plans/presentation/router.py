@@ -8,9 +8,9 @@ from training_systems.features.authentication.presentation import AuthenticatedU
 from training_systems.features.plans.application import (
     DayEdit,
     PlanBasicsUpdate,
-    PlanCard,
     PlanPatch,
     PlanService,
+    PlanSummary,
     compute_weight_recommendations,
 )
 from training_systems.features.plans.application.progress import progress_percent
@@ -20,9 +20,9 @@ from training_systems.features.plans.presentation.schemas import (
     DayResponse,
     EntryResponse,
     PatchPlanRequest,
-    PlanCardListResponse,
-    PlanCardResponse,
     PlanResponse,
+    PlanSummaryListResponse,
+    PlanSummaryResponse,
     ProgressionRequest,
     StartDateSuggestionResponse,
     WeekResponse,
@@ -47,7 +47,7 @@ router = APIRouter(prefix="/plans", tags=["plans"], route_class=DishkaRoute)
 
 @router.get(
     "",
-    response_model=PlanCardListResponse,
+    response_model=PlanSummaryListResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
 )
@@ -57,30 +57,43 @@ async def list_plans(
     user_service: FromDishka[UserService],
     sort: str | None = None,
     limit: int | None = None,
-) -> PlanCardListResponse:
-    cards = await plan_service.list_cards(user_id=authenticated_user_id)
+) -> PlanSummaryListResponse:
+    summaries = await plan_service.list_summaries(user_id=authenticated_user_id)
     if sort == "-lastUpdated":
-        cards = sorted(cards, key=lambda card: card.plan.updated_at, reverse=True)
+        summaries = sorted(
+            summaries, key=lambda summary: summary.plan.updated_at, reverse=True
+        )
     if limit is not None:
-        cards = cards[:limit]
+        summaries = summaries[:limit]
     user = await user_service.get_profile(user_id=authenticated_user_id)
-    return PlanCardListResponse(
-        items=[_to_card_response(card, user.picture_url) for card in cards]
+    return _to_list_response(summaries, owner_picture_url=user.picture_url)
+
+
+def _to_list_response(
+    summaries: list[PlanSummary], owner_picture_url: str | None
+) -> PlanSummaryListResponse:
+    return PlanSummaryListResponse(
+        items=[
+            _to_summary_response(summary, owner_picture_url=owner_picture_url)
+            for summary in summaries
+        ]
     )
 
 
-def _to_card_response(card: PlanCard, picture_url: str | None) -> PlanCardResponse:
-    plan = card.plan
-    return PlanCardResponse(
+def _to_summary_response(
+    summary: PlanSummary, owner_picture_url: str | None
+) -> PlanSummaryResponse:
+    plan = summary.plan
+    return PlanSummaryResponse(
         id=plan.id,
         title=plan.title,
         block_length=plan.block_length,
         frequency=len(plan.weekdays),
         updated_at=plan.updated_at,
         cover_image=plan.cover_image or "",
-        picture_url=picture_url,
+        owner_picture_url=owner_picture_url,
         progress_percent=progress_percent(plan),
-        average_duration_minutes=card.average_duration_minutes,
+        average_duration_minutes=summary.average_duration_minutes,
         last_used_week_index=plan.last_used_week_index,
         last_used_day_index=plan.last_used_day_index,
     )

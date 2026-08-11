@@ -14,7 +14,7 @@ MONDAY = 0
 
 
 @dataclass(frozen=True, slots=True)
-class PlanCard:
+class PlanSummary:
     plan: Plan
     average_duration_minutes: float | None
 
@@ -52,15 +52,17 @@ class PlanService:
             raise PlanNotFound(plan_id)
         return plan
 
-    async def list_cards(self, *, user_id: UUID) -> list[PlanCard]:
+    async def list_summaries(self, *, user_id: UUID) -> list[PlanSummary]:
         plans = await self._repository.list_for_user(user_id=user_id)
-        cards = []
+        summaries = []
         for plan in plans:
             average_duration = await self._repository.average_recorded_duration_minutes(
                 plan_id=plan.id
             )
-            cards.append(PlanCard(plan=plan, average_duration_minutes=average_duration))
-        return cards
+            summaries.append(
+                PlanSummary(plan=plan, average_duration_minutes=average_duration)
+            )
+        return summaries
 
     async def most_recently_updated(self, *, user_id: UUID) -> Plan | None:
         return await self._repository.find_most_recently_updated(user_id=user_id)
