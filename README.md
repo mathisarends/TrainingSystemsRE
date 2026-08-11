@@ -26,7 +26,7 @@ cp .env.example .env
 uv sync
 docker compose up -d db
 uv run alembic upgrade head
-uv run uvicorn training_system.main:app --reload
+uv run uvicorn training_systems.main:app --reload
 ```
 
 The API is served under `/api/v1`; interactive docs at `/docs`.
@@ -51,7 +51,7 @@ network with `DATABASE_URL=postgresql+asyncpg://training:training@localhost:5432
 ```bash
 uv run pytest       # httpx ASGITransport tests, in-memory SQLite, fake Google OAuth provider
 uv run ruff check .
-uv run mypy --strict training_system
+uv run mypy --strict training_systems
 ```
 
 ## Database migrations
@@ -66,7 +66,7 @@ uv run alembic upgrade head
 ## Project layout
 
 ```
-training_system/
+training_systems/
 ├── main.py                 # assembles all features into one FastAPI app via Dishka
 ├── settings.py              # AppSettings, DatabaseSettings
 ├── domain/                  # shared Entity/Aggregate base

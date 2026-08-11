@@ -2,8 +2,8 @@ from uuid import UUID, uuid4
 
 import pytest
 
-from training_system.features.records.application.errors import RecordNotFound
-from training_system.features.records.application.service import (
+from training_systems.features.records.application.errors import RecordNotFound
+from training_systems.features.records.application.service import (
     PersonalRecordService,
     UpsertResult,
 )

@@ -2,8 +2,8 @@ from uuid import UUID
 
 import pytest
 
-from training_system.features.users.application.service import UserService
-from training_system.features.users.domain import User, UserRepository
+from training_systems.features.users.application.service import UserService
+from training_systems.features.users.domain import User, UserRepository
 
 
 class FakeUserRepository(UserRepository):

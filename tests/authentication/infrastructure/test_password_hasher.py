@@ -1,4 +1,4 @@
-from training_system.features.authentication.infrastructure.password_hasher import (
+from training_systems.features.authentication.infrastructure.password_hasher import (
     Pbkdf2PasswordHasher,
 )
 

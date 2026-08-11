@@ -2,17 +2,17 @@ from uuid import uuid4
 
 import pytest
 
-from training_system.features.exercises.application.commands import (
+from training_systems.features.exercises.application.commands import (
     CategoryUpdate,
     ExerciseUpsert,
 )
-from training_system.features.exercises.application.errors import (
+from training_systems.features.exercises.application.errors import (
     ExerciseCatalogNotFound,
 )
-from training_system.features.exercises.application.service import (
+from training_systems.features.exercises.application.service import (
     ExerciseCatalogService,
 )
-from training_system.features.exercises.domain import ExerciseCategory
+from training_systems.features.exercises.domain import ExerciseCategory
 
 
 async def test_get_catalog_raises_when_none_has_been_seeded(

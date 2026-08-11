@@ -1,7 +1,7 @@
 from collections.abc import Callable
 
-from training_system.features.plans.application.progress import progress_percent
-from training_system.features.plans.domain import Plan
+from training_systems.features.plans.application.progress import progress_percent
+from training_systems.features.plans.domain import Plan
 
 
 def test_progress_percent_is_zero_for_a_freshly_created_plan(

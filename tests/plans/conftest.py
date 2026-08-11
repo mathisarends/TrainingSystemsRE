@@ -4,7 +4,7 @@ from uuid import uuid4
 
 import pytest
 
-from training_system.features.plans.domain import EntryEdit, Plan
+from training_systems.features.plans.domain import EntryEdit, Plan
 
 
 def _make_plan(

@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from training_system.features.records.domain.entities import (
+from training_systems.features.records.domain.entities import (
     MAX_HISTORY,
     PersonalRecord,
     RecordSnapshot,

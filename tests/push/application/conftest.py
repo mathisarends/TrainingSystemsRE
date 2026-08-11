@@ -2,10 +2,10 @@ from uuid import UUID
 
 import pytest
 
-from training_system.features.push.application.service import (
+from training_systems.features.push.application.service import (
     PushSubscriptionService,
 )
-from training_system.features.push.domain import (
+from training_systems.features.push.domain import (
     PushSubscription,
     PushSubscriptionRepository,
 )

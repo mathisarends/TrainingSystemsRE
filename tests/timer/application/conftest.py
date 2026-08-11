@@ -3,8 +3,8 @@ from uuid import UUID
 import pytest
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from training_system.features.push.application import PushMessage, PushSender
-from training_system.features.timer.application.service import TimerService
+from training_systems.features.push.application import PushMessage, PushSender
+from training_systems.features.timer.application.service import TimerService
 
 
 class FakePushSender(PushSender):

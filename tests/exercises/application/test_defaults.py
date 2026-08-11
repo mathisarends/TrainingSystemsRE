@@ -1,9 +1,9 @@
 from uuid import uuid4
 
-from training_system.features.exercises.application.defaults import (
+from training_systems.features.exercises.application.defaults import (
     build_default_catalog,
 )
-from training_system.features.exercises.domain import (
+from training_systems.features.exercises.domain import (
     DEFAULT_CATEGORY_DEFAULTS,
     DEFAULT_EXERCISES,
     ExerciseCategory,

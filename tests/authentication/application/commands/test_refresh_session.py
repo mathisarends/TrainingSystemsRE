@@ -2,11 +2,11 @@ from uuid import uuid4
 
 import pytest
 
-from training_system.features.authentication.application import SessionRefresher
-from training_system.features.authentication.application.exceptions import (
+from training_systems.features.authentication.application import SessionRefresher
+from training_systems.features.authentication.application.exceptions import (
     SessionInvalidException,
 )
-from training_system.features.users.domain import User
+from training_systems.features.users.domain import User
 
 from ..conftest import FakeTokenIssuer, FakeUserRepository
 

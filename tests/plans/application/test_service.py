@@ -4,13 +4,13 @@ from uuid import uuid4
 
 import pytest
 
-from training_system.features.plans.application.commands import DayEdit, PlanPatch
-from training_system.features.plans.application.errors import (
+from training_systems.features.plans.application.commands import DayEdit, PlanPatch
+from training_systems.features.plans.application.errors import (
     InvalidPlanPosition,
     PlanNotFound,
 )
-from training_system.features.plans.application.service import PlanService
-from training_system.features.plans.domain import EntryEdit
+from training_systems.features.plans.application.service import PlanService
+from training_systems.features.plans.domain import EntryEdit
 
 from .conftest import FakePlanRepository, FakeSessionTracker
 

@@ -32,7 +32,7 @@ requires = ["uv_build>=0.9.2,<0.10.0"]
 build-backend = "uv_build"
 
 [tool.uv.build-backend]
-module-name = "training_system"
+module-name = "training_systems"
 module-root = ""
 
 [tool.pytest.ini_options]
@@ -41,8 +41,8 @@ testpaths = ["tests"]
 addopts = "--import-mode=importlib"
 
 [tool.coverage.run]
-source = ["training_system"]
-omit = ["training_system/main.py"]
+source = ["training_systems"]
+omit = ["training_systems/main.py"]
 
 [tool.coverage.report]
 exclude_lines = [

@@ -4,15 +4,15 @@ from uuid import uuid4
 import jwt
 import pytest
 
-from training_system.features.authentication.application.exceptions import (
+from training_systems.features.authentication.application.exceptions import (
     SessionExpiredException,
     SessionInvalidException,
 )
-from training_system.features.authentication.application.schemas import TokenType
-from training_system.features.authentication.infrastructure.auth_settings import (
+from training_systems.features.authentication.application.schemas import TokenType
+from training_systems.features.authentication.infrastructure.auth_settings import (
     AuthSettings,
 )
-from training_system.features.authentication.infrastructure.jwt_token_issuer import (
+from training_systems.features.authentication.infrastructure.jwt_token_issuer import (
     JwtTokenIssuer,
 )
 

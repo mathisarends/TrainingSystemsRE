@@ -9,19 +9,19 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from training_system.features.authentication.application import (
+from training_systems.features.authentication.application import (
     GoogleIdentity,
     GoogleOAuthProvider,
 )
-from training_system.features.authentication.infrastructure.provider import (
+from training_systems.features.authentication.infrastructure.provider import (
     AuthenticationProvider,
 )
-from training_system.infrastructure.database.models import DatabaseModel
-from training_system.infrastructure.database.orm import register_models
-from training_system.infrastructure.database.provider import DatabaseProvider
-from training_system.infrastructure.scheduler.provider import SchedulerProvider
-from training_system.wiring import FEATURES, register_features
-from training_system.settings import DatabaseSettings
+from training_systems.infrastructure.database.models import DatabaseModel
+from training_systems.infrastructure.database.orm import register_models
+from training_systems.infrastructure.database.provider import DatabaseProvider
+from training_systems.infrastructure.scheduler.provider import SchedulerProvider
+from training_systems.settings import DatabaseSettings
+from training_systems.wiring import FEATURES, register_features
 
 register_models()
 

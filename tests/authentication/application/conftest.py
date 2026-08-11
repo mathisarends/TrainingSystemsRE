@@ -2,27 +2,27 @@ from uuid import UUID
 
 import pytest
 
-from training_system.features.authentication.application.ports import (
+from training_systems.features.authentication.application.ports import (
     GoogleOAuthProvider,
     PasswordHasher,
     TokenIssuer,
 )
-from training_system.features.authentication.application.schemas import (
+from training_systems.features.authentication.application.schemas import (
     AuthSession,
     GoogleIdentity,
     TokenPayload,
     TokenType,
 )
-from training_system.features.authentication.domain import (
+from training_systems.features.authentication.domain import (
     AuthIdentity,
     AuthIdentityRepository,
 )
-from training_system.features.exercises.application import ExerciseCatalogService
-from training_system.features.exercises.domain import (
+from training_systems.features.exercises.application import ExerciseCatalogService
+from training_systems.features.exercises.domain import (
     ExerciseCatalog,
     ExerciseCatalogRepository,
 )
-from training_system.features.users.domain import User, UserRepository
+from training_systems.features.users.domain import User, UserRepository
 
 
 class FakeUserRepository(UserRepository):

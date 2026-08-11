@@ -2,11 +2,11 @@ from uuid import UUID
 
 import pytest
 
-from training_system.features.records.application.service import (
+from training_systems.features.records.application.service import (
     PersonalRecordService,
 )
-from training_system.features.records.domain import PersonalRecord
-from training_system.features.records.domain.repository import (
+from training_systems.features.records.domain import PersonalRecord
+from training_systems.features.records.domain.repository import (
     PersonalRecordRepository,
 )
 

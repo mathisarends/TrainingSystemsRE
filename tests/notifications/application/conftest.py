@@ -3,10 +3,10 @@ from uuid import UUID
 
 import pytest
 
-from training_system.features.notifications.application.service import (
+from training_systems.features.notifications.application.service import (
     UnseenCompletionService,
 )
-from training_system.features.notifications.domain import (
+from training_systems.features.notifications.domain import (
     UnseenCompletion,
     UnseenCompletionRepository,
 )

@@ -1,6 +1,6 @@
 import pytest
 
-from training_system.features.plans.domain.values import (
+from training_systems.features.plans.domain.values import (
     deload_target_rpe_for,
     rpe_cap_for,
 )

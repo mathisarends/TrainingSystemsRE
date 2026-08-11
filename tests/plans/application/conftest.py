@@ -2,9 +2,9 @@ from uuid import UUID
 
 import pytest
 
-from training_system.features.plans.application.ports import SessionTracker
-from training_system.features.plans.application.service import PlanService
-from training_system.features.plans.domain import Plan, PlanRepository
+from training_systems.features.plans.application.ports import SessionTracker
+from training_systems.features.plans.application.service import PlanService
+from training_systems.features.plans.domain import Plan, PlanRepository
 
 
 class FakePlanRepository(PlanRepository):

@@ -1,11 +1,11 @@
 import pytest
 
-from training_system.features.authentication.application import PasswordAuthFlow
-from training_system.features.authentication.application.exceptions import (
+from training_systems.features.authentication.application import PasswordAuthFlow
+from training_systems.features.authentication.application.exceptions import (
     EmailAlreadyRegisteredException,
     InvalidCredentialsException,
 )
-from training_system.features.exercises.application import ExerciseCatalogService
+from training_systems.features.exercises.application import ExerciseCatalogService
 
 from ..conftest import (
     FakeAuthIdentityRepository,

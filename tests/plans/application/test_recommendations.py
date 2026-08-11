@@ -1,9 +1,9 @@
 from collections.abc import Callable
 
-from training_system.features.plans.application.recommendations import (
+from training_systems.features.plans.application.recommendations import (
     compute_weight_recommendations,
 )
-from training_system.features.plans.domain import EntryEdit, Plan
+from training_systems.features.plans.domain import EntryEdit, Plan
 
 
 def test_first_week_never_gets_recommendations(

@@ -2,10 +2,10 @@ from uuid import UUID
 
 import pytest
 
-from training_system.features.exercises.application.service import (
+from training_systems.features.exercises.application.service import (
     ExerciseCatalogService,
 )
-from training_system.features.exercises.domain import (
+from training_systems.features.exercises.domain import (
     ExerciseCatalog,
     ExerciseCatalogRepository,
 )

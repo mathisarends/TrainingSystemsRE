@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 from uuid import UUID, uuid4
 
-from training_system.domain import Entity
+from training_systems.domain import Entity
 
 
 def test_entity_generates_id_and_created_at_when_not_given() -> None:

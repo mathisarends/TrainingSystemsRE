@@ -2,11 +2,11 @@ from uuid import uuid4
 
 import pytest
 
-from training_system.features.users.application.service import (
+from training_systems.features.users.application.service import (
     UserNotFound,
     UserService,
 )
-from training_system.features.users.domain import User
+from training_systems.features.users.domain import User
 
 from .conftest import FakeUserRepository
 

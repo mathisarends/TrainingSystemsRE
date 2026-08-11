@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 from uuid import uuid4
 
-from training_system.features.notifications.application.service import (
+from training_systems.features.notifications.application.service import (
     UnseenCompletionService,
 )
 

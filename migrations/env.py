@@ -6,9 +6,9 @@ from sqlalchemy import pool
 from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 
-from training_system.infrastructure.database.models import DatabaseModel
-from training_system.infrastructure.database.orm import register_models
-from training_system.settings import DatabaseSettings
+from training_systems.infrastructure.database.models import DatabaseModel
+from training_systems.infrastructure.database.orm import register_models
+from training_systems.settings import DatabaseSettings
 
 register_models()
 

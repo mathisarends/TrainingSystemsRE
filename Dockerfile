@@ -16,4 +16,4 @@ RUN uv sync --no-dev
 
 EXPOSE 8000
 
-CMD ["uv", "run", "uvicorn", "training_system.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "training_systems.main:app", "--host", "0.0.0.0", "--port", "8000"]

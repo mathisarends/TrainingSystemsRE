@@ -3,7 +3,7 @@ from datetime import UTC, datetime
 
 import pytest
 
-from training_system.features.plans.domain import EntryEdit, Plan
+from training_systems.features.plans.domain import EntryEdit, Plan
 
 
 def test_create_builds_empty_week_day_structure(

@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from training_system.features.exercises.domain import (
+from training_systems.features.exercises.domain import (
     CatalogExercise,
     ExerciseCatalog,
     ExerciseCategory,

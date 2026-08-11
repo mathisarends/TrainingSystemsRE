@@ -1,10 +1,10 @@
 
-from training_system.features.authentication.application import (
+from training_systems.features.authentication.application import (
     GoogleIdentity,
     GoogleOAuthFlow,
 )
-from training_system.features.exercises.application import ExerciseCatalogService
-from training_system.features.users.domain import User
+from training_systems.features.exercises.application import ExerciseCatalogService
+from training_systems.features.users.domain import User
 
 from ..conftest import (
     FakeAuthIdentityRepository,

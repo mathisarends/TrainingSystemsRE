@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from training_system.features.timer.application.service import (
+from training_systems.features.timer.application.service import (
     TimerService,
     _job_id,
 )

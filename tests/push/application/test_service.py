@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from training_system.features.push.application.service import (
+from training_systems.features.push.application.service import (
     PushSubscriptionService,
 )
 
