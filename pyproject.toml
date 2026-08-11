@@ -23,6 +23,7 @@ dev = [
     "mypy>=1.15",
     "pytest>=8.3",
     "pytest-asyncio>=0.25",
+    "pytest-cov>=7.1.0",
     "ruff>=0.11",
 ]
 
@@ -37,6 +38,18 @@ module-root = ""
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
+addopts = "--import-mode=importlib"
+
+[tool.coverage.run]
+source = ["training_system"]
+omit = ["training_system/main.py"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "\\.\\.\\.$",
+]
 
 [tool.mypy]
 python_version = "3.12"
