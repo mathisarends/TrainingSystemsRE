@@ -24,14 +24,7 @@ class AuthIdentityModel(DatabaseModel, table=True):
     user_id: UUID = Field(index=True, foreign_key="users.id")
     provider: str = Field(max_length=50)
     subject: str = Field(max_length=255)
-
-
-class SessionModel(DatabaseModel, table=True):
-    __tablename__ = "sessions"
-
-    token: str = Field(max_length=128, unique=True, index=True)
-    user_id: UUID = Field(index=True, foreign_key="users.id")
-    expires_at: datetime = Field(sa_column=Column(DateTime(timezone=True)))
+    password_hash: str | None = Field(default=None, max_length=200)
 
 
 class ExerciseCategoryModel(DatabaseModel, table=True):

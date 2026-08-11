@@ -37,6 +37,7 @@ def upgrade() -> None:
     sa.Column('user_id', sa.Uuid(), nullable=False),
     sa.Column('provider', sqlmodel.sql.sqltypes.AutoString(length=50), nullable=False),
     sa.Column('subject', sqlmodel.sql.sqltypes.AutoString(length=255), nullable=False),
+    sa.Column('password_hash', sqlmodel.sql.sqltypes.AutoString(length=200), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('provider', 'subject')
@@ -134,17 +135,6 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_push_subscriptions_user_id'), 'push_subscriptions', ['user_id'], unique=True)
-    op.create_table('sessions',
-    sa.Column('id', sa.Uuid(), nullable=False),
-    sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
-    sa.Column('token', sqlmodel.sql.sqltypes.AutoString(length=128), nullable=False),
-    sa.Column('user_id', sa.Uuid(), nullable=False),
-    sa.Column('expires_at', sa.DateTime(timezone=True), nullable=True),
-    sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
-    sa.PrimaryKeyConstraint('id')
-    )
-    op.create_index(op.f('ix_sessions_token'), 'sessions', ['token'], unique=True)
-    op.create_index(op.f('ix_sessions_user_id'), 'sessions', ['user_id'], unique=False)
     op.create_table('unseen_completions',
     sa.Column('id', sa.Uuid(), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
@@ -210,9 +200,6 @@ def downgrade() -> None:
     op.drop_table('plan_weeks')
     op.drop_index(op.f('ix_unseen_completions_user_id'), table_name='unseen_completions')
     op.drop_table('unseen_completions')
-    op.drop_index(op.f('ix_sessions_user_id'), table_name='sessions')
-    op.drop_index(op.f('ix_sessions_token'), table_name='sessions')
-    op.drop_table('sessions')
     op.drop_index(op.f('ix_push_subscriptions_user_id'), table_name='push_subscriptions')
     op.drop_table('push_subscriptions')
     op.drop_index(op.f('ix_plans_user_id'), table_name='plans')
