@@ -62,10 +62,15 @@ async def test_patch_catalog_ignores_updates_for_unknown_categories(
 ) -> None:
     user_id = uuid4()
     before = await catalog_service.seed_defaults(user_id=user_id)
+    before.categories = [
+        category
+        for category in before.categories
+        if category.category != ExerciseCategory.SQUAT
+    ]
 
     patched = await catalog_service.patch_catalog(
         user_id=user_id,
-        category_updates=[CategoryUpdate(category="not-a-real-category")],
+        category_updates=[CategoryUpdate(category=ExerciseCategory.SQUAT)],
         exercise_upserts=[],
     )
 
