@@ -7,12 +7,11 @@ from training_system.features.authentication.presentation import AuthenticatedUs
 from training_system.features.notifications.application import (
     UnseenCompletionService,
 )
-from training_system.features.notifications.presentation.mapper import (
-    to_list_response,
-)
+from training_system.features.notifications.domain import UnseenCompletion
 from training_system.features.notifications.presentation.schemas import (
     ClearNotificationsResponse,
     UnseenCompletionListResponse,
+    UnseenCompletionResponse,
 )
 from training_system.presentation.schema import ErrorResponse
 
@@ -39,7 +38,18 @@ async def list_unseen_completions(
     completions = await unseen_completion_service.list_unseen(
         user_id=authenticated_user_id
     )
-    return to_list_response(completions)
+    return _to_list_response(completions)
+
+
+def _to_list_response(
+    completions: list[UnseenCompletion],
+) -> UnseenCompletionListResponse:
+    return UnseenCompletionListResponse(
+        items=[
+            UnseenCompletionResponse(id=item.id, completed_at=item.completed_at)
+            for item in completions
+        ]
+    )
 
 
 @router.delete(

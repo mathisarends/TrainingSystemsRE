@@ -8,22 +8,24 @@ from training_system.features.authentication.presentation import AuthenticatedUs
 from training_system.features.plans.application import (
     DayEdit,
     PlanBasicsUpdate,
+    PlanCard,
     PlanPatch,
     PlanService,
     compute_weight_recommendations,
 )
-from training_system.features.plans.domain import EntryEdit
-from training_system.features.plans.presentation.mapper import (
-    to_card_response,
-    to_response,
-)
+from training_system.features.plans.application.progress import progress_percent
+from training_system.features.plans.domain import Day, Entry, EntryEdit, Plan, Week
 from training_system.features.plans.presentation.schemas import (
     CreatePlanRequest,
+    DayResponse,
+    EntryResponse,
     PatchPlanRequest,
     PlanCardListResponse,
+    PlanCardResponse,
     PlanResponse,
     ProgressionRequest,
     StartDateSuggestionResponse,
+    WeekResponse,
 )
 from training_system.features.users.application import UserService
 from training_system.presentation.schema import ErrorResponse
@@ -64,7 +66,24 @@ async def list_plans(
         cards = cards[:limit]
     user = await user_service.get_profile(user_id=authenticated_user_id)
     return PlanCardListResponse(
-        items=[to_card_response(card, user.picture_url) for card in cards]
+        items=[_to_card_response(card, user.picture_url) for card in cards]
+    )
+
+
+def _to_card_response(card: PlanCard, picture_url: str | None) -> PlanCardResponse:
+    plan = card.plan
+    return PlanCardResponse(
+        id=plan.id,
+        title=plan.title,
+        block_length=plan.block_length,
+        frequency=len(plan.weekdays),
+        updated_at=plan.updated_at,
+        cover_image=plan.cover_image or "",
+        picture_url=picture_url,
+        progress_percent=progress_percent(plan),
+        average_duration_minutes=card.average_duration_minutes,
+        last_used_week_index=plan.last_used_week_index,
+        last_used_day_index=plan.last_used_day_index,
     )
 
 
@@ -103,7 +122,61 @@ async def create_plan(
         start_date=body.start_date,
         cover_image=body.cover_image,
     )
-    return to_response(plan, {})
+    return _to_response(plan, {})
+
+
+def _to_response(plan: Plan, recommendations: dict[UUID, float]) -> PlanResponse:
+    return PlanResponse(
+        id=plan.id,
+        title=plan.title,
+        weekdays=plan.weekdays,
+        block_length=plan.block_length,
+        start_date=plan.start_date,
+        cover_image=plan.cover_image,
+        last_used_week_index=plan.last_used_week_index,
+        last_used_day_index=plan.last_used_day_index,
+        updated_at=plan.updated_at,
+        created_at=plan.created_at,
+        weeks=[_to_week_response(week, recommendations) for week in plan.weeks],
+    )
+
+
+def _to_week_response(week: Week, recommendations: dict[UUID, float]) -> WeekResponse:
+    return WeekResponse(
+        id=week.id,
+        week_index=week.week_index,
+        days=[_to_day_response(day, recommendations) for day in week.days],
+    )
+
+
+def _to_day_response(day: Day, recommendations: dict[UUID, float]) -> DayResponse:
+    return DayResponse(
+        id=day.id,
+        day_index=day.day_index,
+        entries=[_to_entry_response(entry, recommendations) for entry in day.entries],
+        start_time=day.start_time,
+        end_time=day.end_time,
+        duration_minutes=day.duration_minutes,
+        is_recording=day.is_recording,
+    )
+
+
+def _to_entry_response(
+    entry: Entry, recommendations: dict[UUID, float]
+) -> EntryResponse:
+    return EntryResponse(
+        id=entry.id,
+        category=entry.category,
+        exercise_name=entry.exercise_name,
+        sets=entry.sets,
+        reps=entry.reps,
+        target_rpe=entry.target_rpe,
+        weight=entry.weight,
+        actual_rpe=entry.actual_rpe,
+        est_max=entry.est_max,
+        notes=entry.notes,
+        recommended_weight=recommendations.get(entry.id),
+    )
 
 
 @router.get(
@@ -120,7 +193,7 @@ async def get_plan(
 ) -> PlanResponse:
     plan = await plan_service.get(user_id=authenticated_user_id, plan_id=plan_id)
     recommendations = compute_weight_recommendations(plan)
-    return to_response(plan, recommendations)
+    return _to_response(plan, recommendations)
 
 
 @router.patch(
@@ -176,7 +249,7 @@ async def patch_plan(
         patch=PlanPatch(basics=basics, day_edit=day_edit),
     )
     recommendations = compute_weight_recommendations(plan)
-    return to_response(plan, recommendations)
+    return _to_response(plan, recommendations)
 
 
 @router.delete(
@@ -213,4 +286,4 @@ async def apply_plan_progression(
         deload_last_week=body.deload_last_week,
     )
     recommendations = compute_weight_recommendations(plan)
-    return to_response(plan, recommendations)
+    return _to_response(plan, recommendations)

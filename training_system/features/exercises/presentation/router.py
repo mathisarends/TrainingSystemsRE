@@ -5,13 +5,17 @@ from fastapi import APIRouter, status
 
 from training_system.features.authentication.presentation import AuthenticatedUserId
 from training_system.features.exercises.application import ExerciseCatalogService
-from training_system.features.exercises.presentation.mapper import (
-    to_category_updates,
-    to_exercise_upserts,
-    to_response,
+from training_system.features.exercises.application.commands import (
+    CategoryUpdate,
+    ExerciseUpsert,
 )
+from training_system.features.exercises.domain import ExerciseCatalog
 from training_system.features.exercises.presentation.schemas import (
+    CategoryResponse,
+    CategoryUpdateRequest,
     ExerciseCatalogResponse,
+    ExerciseResponse,
+    ExerciseUpsertRequest,
     PatchExerciseCatalogRequest,
 )
 from training_system.presentation.schema import ErrorResponse
@@ -36,7 +40,33 @@ async def get_exercise_catalog(
     catalog_service: FromDishka[ExerciseCatalogService],
 ) -> ExerciseCatalogResponse:
     catalog = await catalog_service.get_catalog(user_id=authenticated_user_id)
-    return to_response(catalog)
+    return _to_response(catalog)
+
+
+def _to_response(catalog: ExerciseCatalog) -> ExerciseCatalogResponse:
+    return ExerciseCatalogResponse(
+        categories=[
+            CategoryResponse(
+                category=category.category,
+                rest_seconds=category.rest_seconds,
+                default_sets=category.default_sets,
+                default_reps=category.default_reps,
+                default_target_rpe=category.default_target_rpe,
+            )
+            for category in catalog.categories
+        ],
+        exercises_by_category={
+            category.category: [
+                ExerciseResponse(
+                    id=exercise.id,
+                    name=exercise.name,
+                    max_factor=exercise.max_factor,
+                )
+                for exercise in catalog.exercises_in(category.category)
+            ]
+            for category in catalog.categories
+        },
+    )
 
 
 @router.patch(
@@ -53,10 +83,39 @@ async def update_exercise_catalog(
 ) -> ExerciseCatalogResponse:
     catalog = await catalog_service.patch_catalog(
         user_id=authenticated_user_id,
-        category_updates=to_category_updates(body.categories),
-        exercise_upserts=to_exercise_upserts(body.exercises),
+        category_updates=_to_category_updates(body.categories),
+        exercise_upserts=_to_exercise_upserts(body.exercises),
     )
-    return to_response(catalog)
+    return _to_response(catalog)
+
+
+def _to_category_updates(
+    requests: list[CategoryUpdateRequest],
+) -> list[CategoryUpdate]:
+    return [
+        CategoryUpdate(
+            category=request.category,
+            rest_seconds=request.rest_seconds,
+            default_sets=request.default_sets,
+            default_reps=request.default_reps,
+            default_target_rpe=request.default_target_rpe,
+        )
+        for request in requests
+    ]
+
+
+def _to_exercise_upserts(
+    requests: list[ExerciseUpsertRequest],
+) -> list[ExerciseUpsert]:
+    return [
+        ExerciseUpsert(
+            id=request.id,
+            category=request.category,
+            name=request.name,
+            max_factor=request.max_factor,
+        )
+        for request in requests
+    ]
 
 
 @router.delete(
@@ -71,4 +130,4 @@ async def reset_exercise_catalog(
     catalog_service: FromDishka[ExerciseCatalogService],
 ) -> ExerciseCatalogResponse:
     catalog = await catalog_service.reset_to_defaults(user_id=authenticated_user_id)
-    return to_response(catalog)
+    return _to_response(catalog)

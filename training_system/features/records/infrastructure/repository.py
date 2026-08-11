@@ -15,34 +15,6 @@ from training_system.features.records.domain.repository import (
 from training_system.infrastructure.database.orm import PersonalRecordModel
 
 
-def _history_to_json(history: list[RecordSnapshot]) -> list[dict[str, object]]:
-    return [
-        {
-            "sets": snapshot.sets,
-            "reps": snapshot.reps,
-            "weight": snapshot.weight,
-            "actual_rpe": snapshot.actual_rpe,
-            "est_max": snapshot.est_max,
-            "achieved_at": snapshot.achieved_at.isoformat(),
-        }
-        for snapshot in history
-    ]
-
-
-def _history_from_json(raw: list[dict[str, object]]) -> list[RecordSnapshot]:
-    return [
-        RecordSnapshot(
-            sets=int(item["sets"]),  # type: ignore[call-overload]
-            reps=int(item["reps"]),  # type: ignore[call-overload]
-            weight=float(item["weight"]),  # type: ignore[arg-type]
-            actual_rpe=float(item["actual_rpe"]),  # type: ignore[arg-type]
-            est_max=float(item["est_max"]),  # type: ignore[arg-type]
-            achieved_at=datetime.fromisoformat(str(item["achieved_at"])),
-        )
-        for item in raw
-    ]
-
-
 class SqlPersonalRecordRepository(PersonalRecordRepository):
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
@@ -109,3 +81,31 @@ class SqlPersonalRecordRepository(PersonalRecordRepository):
             )
         )
         await self._session.flush()
+
+
+def _history_to_json(history: list[RecordSnapshot]) -> list[dict[str, object]]:
+    return [
+        {
+            "sets": snapshot.sets,
+            "reps": snapshot.reps,
+            "weight": snapshot.weight,
+            "actual_rpe": snapshot.actual_rpe,
+            "est_max": snapshot.est_max,
+            "achieved_at": snapshot.achieved_at.isoformat(),
+        }
+        for snapshot in history
+    ]
+
+
+def _history_from_json(raw: list[dict[str, object]]) -> list[RecordSnapshot]:
+    return [
+        RecordSnapshot(
+            sets=int(item["sets"]),  # type: ignore[call-overload]
+            reps=int(item["reps"]),  # type: ignore[call-overload]
+            weight=float(item["weight"]),  # type: ignore[arg-type]
+            actual_rpe=float(item["actual_rpe"]),  # type: ignore[arg-type]
+            est_max=float(item["est_max"]),  # type: ignore[arg-type]
+            achieved_at=datetime.fromisoformat(str(item["achieved_at"])),
+        )
+        for item in raw
+    ]
