@@ -5,6 +5,7 @@ from dishka import AsyncContainer, make_async_container
 from dishka.integrations.fastapi import setup_dishka
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.routing import APIRoute
 
 from training_system.features.authentication.feature import (
     feature as authentication_feature,
@@ -40,6 +41,10 @@ FEATURES = (
 API_PREFIX = "/api/v1"
 
 
+def _use_function_name_as_operation_id(route: APIRoute) -> str:
+    return route.name
+
+
 def create_container() -> AsyncContainer:
     providers = [DatabaseProvider(), SchedulerProvider()]
     providers.extend(
@@ -65,7 +70,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
 def create_app() -> FastAPI:
     settings = AppSettings()
-    app = FastAPI(title="TrainingSystems", lifespan=lifespan)
+    app = FastAPI(
+        title="TrainingSystems",
+        lifespan=lifespan,
+        generate_unique_id_function=_use_function_name_as_operation_id,
+    )
 
     app.add_middleware(
         CORSMiddleware,

@@ -47,7 +47,6 @@ router = APIRouter(prefix="/plans", tags=["plans"], route_class=DishkaRoute)
 
 @router.get(
     "",
-    operation_id="list_plans",
     response_model=PlanCardListResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -89,7 +88,6 @@ def _to_card_response(card: PlanCard, picture_url: str | None) -> PlanCardRespon
 
 @router.get(
     "/suggestions",
-    operation_id="suggest_plan_start_date",
     response_model=StartDateSuggestionResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -104,7 +102,6 @@ async def suggest_plan_start_date(
 
 @router.post(
     "",
-    operation_id="create_plan",
     response_model=PlanResponse,
     status_code=status.HTTP_201_CREATED,
     responses=RESPONSES,
@@ -181,7 +178,6 @@ def _to_entry_response(
 
 @router.get(
     "/{plan_id}",
-    operation_id="get_plan",
     response_model=PlanResponse,
     status_code=status.HTTP_200_OK,
     responses=NOT_FOUND_RESPONSES,
@@ -198,7 +194,6 @@ async def get_plan(
 
 @router.patch(
     "/{plan_id}",
-    operation_id="patch_plan",
     response_model=PlanResponse,
     status_code=status.HTTP_200_OK,
     responses=PATCH_RESPONSES,
@@ -254,7 +249,6 @@ async def patch_plan(
 
 @router.delete(
     "/{plan_id}",
-    operation_id="delete_plan",
     status_code=status.HTTP_204_NO_CONTENT,
     responses=NOT_FOUND_RESPONSES,
 )
@@ -268,7 +262,6 @@ async def delete_plan(
 
 @router.post(
     "/{plan_id}/progressions",
-    operation_id="apply_plan_progression",
     response_model=PlanResponse,
     status_code=status.HTTP_200_OK,
     responses=NOT_FOUND_RESPONSES,

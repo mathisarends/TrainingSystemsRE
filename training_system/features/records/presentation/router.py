@@ -31,7 +31,6 @@ router = APIRouter(prefix="/me/records", tags=["records"], route_class=DishkaRou
 
 @router.get(
     "",
-    operation_id="list_personal_records",
     response_model=PersonalRecordListResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -74,7 +73,6 @@ def _to_response(record: PersonalRecord) -> PersonalRecordResponse:
 
 @router.put(
     "/{exercise_id}",
-    operation_id="upsert_personal_record",
     response_model=UpsertRecordResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -106,7 +104,6 @@ def _to_upsert_response(result: UpsertResult) -> UpsertRecordResponse:
 
 @router.delete(
     "/{exercise_id}",
-    operation_id="revert_personal_record",
     response_model=PersonalRecordResponse | None,
     status_code=status.HTTP_200_OK,
     responses=NOT_FOUND_RESPONSES,

@@ -25,7 +25,6 @@ router = APIRouter(prefix="/me", tags=["users"], route_class=DishkaRoute)
 
 @router.get(
     "",
-    operation_id="get_own_profile",
     response_model=UserResponse,
     status_code=status.HTTP_200_OK,
     responses=NOT_FOUND_RESPONSES,
@@ -40,7 +39,6 @@ async def get_own_profile(
 
 @router.patch(
     "",
-    operation_id="update_own_profile",
     response_model=UserResponse,
     status_code=status.HTTP_200_OK,
     responses=NOT_FOUND_RESPONSES,
@@ -60,7 +58,6 @@ async def update_own_profile(
 
 @router.delete(
     "",
-    operation_id="delete_own_account",
     response_model=None,
     status_code=status.HTTP_204_NO_CONTENT,
     responses=AUTHENTICATION_RESPONSES,

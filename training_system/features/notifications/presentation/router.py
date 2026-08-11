@@ -26,7 +26,6 @@ router = APIRouter(
 
 @router.get(
     "",
-    operation_id="list_unseen_completions",
     response_model=UnseenCompletionListResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -54,7 +53,6 @@ def _to_list_response(
 
 @router.delete(
     "",
-    operation_id="clear_unseen_completions",
     response_model=ClearNotificationsResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,

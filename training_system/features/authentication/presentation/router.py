@@ -45,7 +45,6 @@ _UNAUTHORIZED: dict[int | str, dict[str, Any]] = {
     "/google/login",
     status_code=status.HTTP_307_TEMPORARY_REDIRECT,
     response_model=None,
-    operation_id="google_login",
 )
 async def google_login(
     google_oauth_flow: FromDishka[GoogleOAuthFlow],
@@ -64,7 +63,6 @@ async def google_login(
 @router.get(
     "/google/callback",
     response_model=None,
-    operation_id="google_callback",
     include_in_schema=False,
 )
 async def google_callback(
@@ -106,7 +104,6 @@ async def google_callback(
 
 @router.post(
     "/register",
-    operation_id="register_with_password",
     response_model=UserResponse,
     status_code=status.HTTP_201_CREATED,
     responses={status.HTTP_409_CONFLICT: {"model": ErrorResponse}},
@@ -132,7 +129,6 @@ async def register_with_password(
 
 @router.post(
     "/login",
-    operation_id="login_with_password",
     response_model=UserResponse,
     status_code=status.HTTP_200_OK,
     responses=_UNAUTHORIZED,
@@ -156,7 +152,6 @@ async def login_with_password(
 
 @router.post(
     "/logout",
-    operation_id="logout",
     response_model=None,
     status_code=status.HTTP_204_NO_CONTENT,
 )
@@ -169,7 +164,6 @@ async def logout(
 
 @router.post(
     "/refresh",
-    operation_id="refresh",
     response_model=None,
     status_code=status.HTTP_204_NO_CONTENT,
     responses=_UNAUTHORIZED,

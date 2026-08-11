@@ -17,7 +17,6 @@ router = APIRouter(prefix="/me/timer", tags=["timer"], route_class=DishkaRoute)
 
 @router.put(
     "",
-    operation_id="start_rest_timer",
     response_model=TimerStatusResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -32,7 +31,6 @@ async def start_rest_timer(
 
 @router.delete(
     "",
-    operation_id="stop_rest_timer",
     response_model=TimerStatusResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,

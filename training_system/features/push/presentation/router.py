@@ -20,7 +20,6 @@ router = APIRouter(prefix="/me/push", tags=["push"], route_class=DishkaRoute)
 
 @router.put(
     "",
-    operation_id="register_push_subscription",
     response_model=PushSubscriptionResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,

@@ -30,7 +30,6 @@ router = APIRouter(prefix="/me/exercises", tags=["exercises"], route_class=Dishk
 
 @router.get(
     "",
-    operation_id="get_exercise_catalog",
     response_model=ExerciseCatalogResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -71,7 +70,6 @@ def _to_response(catalog: ExerciseCatalog) -> ExerciseCatalogResponse:
 
 @router.patch(
     "",
-    operation_id="update_exercise_catalog",
     response_model=ExerciseCatalogResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
@@ -120,7 +118,6 @@ def _to_exercise_upserts(
 
 @router.delete(
     "",
-    operation_id="reset_exercise_catalog",
     response_model=ExerciseCatalogResponse,
     status_code=status.HTTP_200_OK,
     responses=RESPONSES,
