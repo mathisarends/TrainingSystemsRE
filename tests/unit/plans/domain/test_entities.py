@@ -46,7 +46,9 @@ def test_apply_day_edit_reports_no_activity_when_editing_without_changing_weight
     make_plan: Callable[..., Plan], make_entry_edit: Callable[..., EntryEdit]
 ) -> None:
     plan = make_plan()
-    plan.apply_day_edit(week_index=0, day_index=0, entries=[make_entry_edit(weight=100.0)])
+    plan.apply_day_edit(
+        week_index=0, day_index=0, entries=[make_entry_edit(weight=100.0)]
+    )
     existing_entry = plan.day_at(week_index=0, day_index=0).entries[0]
 
     activity = plan.apply_day_edit(

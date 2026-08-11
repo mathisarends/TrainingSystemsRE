@@ -10,7 +10,7 @@ from training_system.features.plans.application.errors import (
     PlanNotFound,
 )
 from training_system.features.plans.application.service import PlanService
-from training_system.features.plans.domain import EntryEdit, Plan
+from training_system.features.plans.domain import EntryEdit
 
 from .conftest import FakePlanRepository, FakeSessionTracker
 
