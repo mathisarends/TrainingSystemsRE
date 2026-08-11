@@ -9,11 +9,11 @@ from httpx import ASGITransport, AsyncClient
 from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.pool import StaticPool
 
-from training_system.authentication.application import (
+from training_system.features.authentication.application import (
     GoogleIdentity,
     GoogleOAuthProvider,
 )
-from training_system.authentication.infrastructure.provider import (
+from training_system.features.authentication.infrastructure.provider import (
     AuthenticationProvider,
 )
 from training_system.infrastructure.database.models import DatabaseModel

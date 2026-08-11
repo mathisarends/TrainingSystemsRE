@@ -1,8 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from training_system.authentication.domain.entities import AuthIdentity
-from training_system.authentication.domain.repository import AuthIdentityRepository
+from training_system.features.authentication.domain.entities import AuthIdentity
+from training_system.features.authentication.domain.repository import (
+    AuthIdentityRepository,
+)
 from training_system.infrastructure.database.orm import AuthIdentityModel
 
 

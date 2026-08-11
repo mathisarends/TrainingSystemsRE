@@ -2,7 +2,7 @@ import hashlib
 import hmac
 import secrets
 
-from training_system.authentication.application.ports import PasswordHasher
+from training_system.features.authentication.application.ports import PasswordHasher
 
 _ALGORITHM = "sha256"
 _ITERATIONS = 600_000

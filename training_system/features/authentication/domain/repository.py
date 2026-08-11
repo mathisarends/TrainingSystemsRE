@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from training_system.authentication.domain.entities import AuthIdentity
+from training_system.features.authentication.domain.entities import AuthIdentity
 
 
 class AuthIdentityRepository(ABC):

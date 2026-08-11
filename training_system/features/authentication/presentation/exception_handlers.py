@@ -1,11 +1,11 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
-from training_system.authentication.application import (
+from training_system.features.authentication.application import (
     EmailAlreadyRegisteredException,
     InvalidCredentialsException,
 )
-from training_system.authentication.presentation.dependencies import (
+from training_system.features.authentication.presentation.dependencies import (
     AuthenticationRequired,
 )
 from training_system.presentation.schema import ErrorResponse

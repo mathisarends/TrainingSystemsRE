@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from training_system.authentication.application.schemas import (
+from training_system.features.authentication.application.schemas import (
     AuthSession,
     GoogleIdentity,
     TokenPayload,

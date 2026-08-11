@@ -3,9 +3,11 @@ from urllib.parse import urlencode
 import httpx
 from pydantic import ValidationError
 
-from training_system.authentication.application.ports import GoogleOAuthProvider
-from training_system.authentication.application.schemas import GoogleIdentity
-from training_system.authentication.infrastructure.google_auth_settings import (
+from training_system.features.authentication.application.ports import (
+    GoogleOAuthProvider,
+)
+from training_system.features.authentication.application.schemas import GoogleIdentity
+from training_system.features.authentication.infrastructure.google_auth_settings import (  # noqa: E501
     GoogleAuthSettings,
 )
 

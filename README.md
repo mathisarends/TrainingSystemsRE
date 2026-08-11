@@ -72,8 +72,8 @@ training_system/
 ├── domain/                  # shared Entity/Aggregate base
 ├── infrastructure/          # database (SqlRepository, orm.py) + scheduler providers
 ├── presentation/            # Feature composition dataclass, base Schema, /health
-├── authentication/          # Google OAuth redirect flow + password auth, JWT access/refresh cookies
 └── features/
+    ├── authentication/       # Google OAuth redirect flow + password auth, JWT access/refresh cookies
     ├── users/                # GET/PATCH/DELETE /me
     ├── exercises/            # exercise catalog
     ├── plans/                # training plans, RPE progression, session tracking

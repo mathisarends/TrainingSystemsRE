@@ -4,14 +4,16 @@ from uuid import UUID
 from fastapi import Depends
 from starlette.requests import HTTPConnection
 
-from training_system.authentication.application import (
+from training_system.features.authentication.application import (
     SessionExpiredException,
     SessionInvalidException,
     TokenIssuer,
     TokenPayload,
     TokenType,
 )
-from training_system.authentication.infrastructure.auth_settings import AuthSettings
+from training_system.features.authentication.infrastructure.auth_settings import (
+    AuthSettings,
+)
 
 
 class AuthenticationRequired(Exception):

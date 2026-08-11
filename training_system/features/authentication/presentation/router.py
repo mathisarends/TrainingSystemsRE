@@ -4,24 +4,28 @@ from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter, Query, Request, Response, status
 from fastapi.responses import HTMLResponse, RedirectResponse
 
-from training_system.authentication.application import (
+from training_system.features.authentication.application import (
     GoogleOAuthFlow,
     PasswordAuthFlow,
     SessionRefresher,
 )
-from training_system.authentication.infrastructure.auth_settings import AuthSettings
-from training_system.authentication.presentation.cookies import (
+from training_system.features.authentication.infrastructure.auth_settings import (
+    AuthSettings,
+)
+from training_system.features.authentication.presentation.cookies import (
     clear_auth_cookies,
     set_auth_cookies,
 )
-from training_system.authentication.presentation.dependencies import (
+from training_system.features.authentication.presentation.dependencies import (
     RefreshAuthenticatedUserId,
 )
-from training_system.authentication.presentation.oauth_popup import OAuthPopupResponse
-from training_system.authentication.presentation.oauth_state_cookies import (
+from training_system.features.authentication.presentation.oauth_popup import (
+    OAuthPopupResponse,
+)
+from training_system.features.authentication.presentation.oauth_state_cookies import (
     GoogleOAuthStateCookies,
 )
-from training_system.authentication.presentation.schemas import (
+from training_system.features.authentication.presentation.schemas import (
     LoginRequest,
     RegisterRequest,
 )

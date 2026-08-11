@@ -3,7 +3,7 @@ from typing import Any
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter, status
 
-from training_system.authentication.presentation import AuthenticatedUserId
+from training_system.features.authentication.presentation import AuthenticatedUserId
 from training_system.features.exercises.application import ExerciseCatalogService
 from training_system.features.exercises.presentation.mapper import (
     to_category_updates,

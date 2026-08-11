@@ -1,15 +1,18 @@
 from dataclasses import dataclass
 
-from training_system.authentication.application.exceptions import (
+from training_system.features.authentication.application.exceptions import (
     EmailAlreadyRegisteredException,
     InvalidCredentialsException,
 )
-from training_system.authentication.application.ports import (
+from training_system.features.authentication.application.ports import (
     PasswordHasher,
     TokenIssuer,
 )
-from training_system.authentication.application.schemas import AuthSession
-from training_system.authentication.domain import AuthIdentity, AuthIdentityRepository
+from training_system.features.authentication.application.schemas import AuthSession
+from training_system.features.authentication.domain import (
+    AuthIdentity,
+    AuthIdentityRepository,
+)
 from training_system.features.exercises.application import ExerciseCatalogService
 from training_system.features.users.domain import User, UserRepository
 

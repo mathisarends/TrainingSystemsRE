@@ -1,10 +1,10 @@
-from training_system.authentication.infrastructure.provider import (
+from training_system.features.authentication.infrastructure.provider import (
     AuthenticationProvider,
 )
-from training_system.authentication.presentation.exception_handlers import (
+from training_system.features.authentication.presentation.exception_handlers import (
     register_exception_handlers,
 )
-from training_system.authentication.presentation.router import router
+from training_system.features.authentication.presentation.router import router
 from training_system.presentation.feature import Feature
 
 feature = Feature(

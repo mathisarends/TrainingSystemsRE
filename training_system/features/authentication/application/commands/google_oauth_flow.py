@@ -1,19 +1,22 @@
 import secrets
 
-from training_system.authentication.application.exceptions import (
+from training_system.features.authentication.application.exceptions import (
     InvalidCredentialsException,
 )
-from training_system.authentication.application.ports import (
+from training_system.features.authentication.application.ports import (
     GoogleOAuthProvider,
     TokenIssuer,
 )
-from training_system.authentication.application.schemas import (
+from training_system.features.authentication.application.schemas import (
     AuthSession,
     GoogleAuthorizationRequest,
     GoogleCallbackResult,
     GoogleIdentity,
 )
-from training_system.authentication.domain import AuthIdentity, AuthIdentityRepository
+from training_system.features.authentication.domain import (
+    AuthIdentity,
+    AuthIdentityRepository,
+)
 from training_system.features.exercises.application import ExerciseCatalogService
 from training_system.features.users.domain import User, UserRepository
 

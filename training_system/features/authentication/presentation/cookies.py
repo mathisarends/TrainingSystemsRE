@@ -1,7 +1,9 @@
 from fastapi import Response
 
-from training_system.authentication.application.schemas import AuthSession
-from training_system.authentication.infrastructure.auth_settings import AuthSettings
+from training_system.features.authentication.application.schemas import AuthSession
+from training_system.features.authentication.infrastructure.auth_settings import (
+    AuthSettings,
+)
 from training_system.settings import AppSettings
 
 _SECONDS_PER_MINUTE = 60

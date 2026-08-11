@@ -1,7 +1,7 @@
 from dishka import Provider, Scope, provide
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from training_system.authentication.application import (
+from training_system.features.authentication.application import (
     GoogleOAuthFlow,
     GoogleOAuthProvider,
     PasswordAuthFlow,
@@ -9,27 +9,29 @@ from training_system.authentication.application import (
     SessionRefresher,
     TokenIssuer,
 )
-from training_system.authentication.domain import AuthIdentityRepository
-from training_system.authentication.infrastructure.auth_settings import AuthSettings
-from training_system.authentication.infrastructure.google_auth_settings import (
+from training_system.features.authentication.domain import AuthIdentityRepository
+from training_system.features.authentication.infrastructure.auth_settings import (
+    AuthSettings,
+)
+from training_system.features.authentication.infrastructure.google_auth_settings import (  # noqa: E501
     GoogleAuthSettings,
 )
-from training_system.authentication.infrastructure.google_oauth_client import (
+from training_system.features.authentication.infrastructure.google_oauth_client import (
     GoogleOAuthClient,
 )
-from training_system.authentication.infrastructure.identity_repository import (
+from training_system.features.authentication.infrastructure.identity_repository import (
     SqlAuthIdentityRepository,
 )
-from training_system.authentication.infrastructure.jwt_token_issuer import (
+from training_system.features.authentication.infrastructure.jwt_token_issuer import (
     JwtTokenIssuer,
 )
-from training_system.authentication.infrastructure.oauth_state_settings import (
+from training_system.features.authentication.infrastructure.oauth_state_settings import (  # noqa: E501
     OAuthStateSettings,
 )
-from training_system.authentication.infrastructure.password_hasher import (
+from training_system.features.authentication.infrastructure.password_hasher import (
     Pbkdf2PasswordHasher,
 )
-from training_system.authentication.presentation.oauth_state_cookies import (
+from training_system.features.authentication.presentation.oauth_state_cookies import (
     GoogleOAuthStateCookies,
 )
 from training_system.features.exercises.application import ExerciseCatalogService

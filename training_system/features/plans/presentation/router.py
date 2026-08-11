@@ -4,7 +4,7 @@ from uuid import UUID
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter, status
 
-from training_system.authentication.presentation import AuthenticatedUserId
+from training_system.features.authentication.presentation import AuthenticatedUserId
 from training_system.features.plans.application import (
     DayEdit,
     PlanBasicsUpdate,

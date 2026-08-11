@@ -1,10 +1,10 @@
 from uuid import UUID
 
-from training_system.authentication.application.exceptions import (
+from training_system.features.authentication.application.exceptions import (
     SessionInvalidException,
 )
-from training_system.authentication.application.ports import TokenIssuer
-from training_system.authentication.application.schemas import AuthSession
+from training_system.features.authentication.application.ports import TokenIssuer
+from training_system.features.authentication.application.schemas import AuthSession
 from training_system.features.users.domain import UserRepository
 
 

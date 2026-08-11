@@ -4,17 +4,19 @@ from uuid import UUID
 
 import jwt
 
-from training_system.authentication.application.exceptions import (
+from training_system.features.authentication.application.exceptions import (
     SessionExpiredException,
     SessionInvalidException,
 )
-from training_system.authentication.application.ports import TokenIssuer
-from training_system.authentication.application.schemas import (
+from training_system.features.authentication.application.ports import TokenIssuer
+from training_system.features.authentication.application.schemas import (
     AuthSession,
     TokenPayload,
     TokenType,
 )
-from training_system.authentication.infrastructure.auth_settings import AuthSettings
+from training_system.features.authentication.infrastructure.auth_settings import (
+    AuthSettings,
+)
 
 
 class _JwtPayload(TypedDict):
