@@ -80,7 +80,7 @@ class OAuthStateCookies:
         return state
 
     def _sign(self, *, issued_at: str, state: str) -> str:
-        payload = f"{issued_at}.{state}".encode("utf-8")
+        payload = f"{issued_at}.{state}".encode()
         signature = hmac.new(self._signing_key, payload, hashlib.sha256).digest()
         return base64.urlsafe_b64encode(signature).rstrip(b"=").decode("ascii")
 

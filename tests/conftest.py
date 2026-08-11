@@ -1,4 +1,5 @@
 from collections.abc import AsyncIterator
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 from dishka import AsyncContainer, Provider, Scope, make_async_container, provide
@@ -9,14 +10,11 @@ from sqlalchemy.ext.asyncio import AsyncEngine, create_async_engine
 from sqlalchemy.pool import StaticPool
 
 from training_system.authentication.application import (
-    IdentityVerifier,
-    VerifiedIdentity,
+    GoogleIdentity,
+    GoogleOAuthProvider,
 )
 from training_system.authentication.infrastructure.provider import (
     AuthenticationProvider,
-)
-from training_system.authentication.infrastructure.settings import (
-    AuthenticationSettings,
 )
 from training_system.infrastructure.database.models import DatabaseModel
 from training_system.infrastructure.database.orm import register_models
@@ -28,15 +26,20 @@ from training_system.settings import DatabaseSettings
 register_models()
 
 
-class FakeIdentityVerifier(IdentityVerifier):
-    """Treats the raw credential string as the Google subject, deterministically."""
+class FakeGoogleOAuthProvider(GoogleOAuthProvider):
+    """Treats the authorization code as the Google subject, deterministically."""
 
-    def verify(self, *, credential: str) -> VerifiedIdentity:
-        return VerifiedIdentity(
-            subject=credential,
-            email=f"{credential}@example.com",
-            name=credential,
-            picture_url=None,
+    def build_authorization_url(self, *, state: str) -> str:
+        return f"https://accounts.google.com/o/oauth2/v2/auth?state={state}"
+
+    async def exchange_code_for_identity(
+        self, *, authorization_code: str
+    ) -> GoogleIdentity:
+        return GoogleIdentity(
+            subject=authorization_code,
+            email=f"{authorization_code}@example.com",
+            name=authorization_code,
+            email_verified=True,
         )
 
 
@@ -60,12 +63,8 @@ class TestDatabaseProvider(DatabaseProvider):
 
 class TestAuthenticationProvider(AuthenticationProvider):
     @provide(scope=Scope.APP)
-    def settings(self) -> AuthenticationSettings:
-        return AuthenticationSettings(cookie_secure=False)
-
-    @provide(scope=Scope.APP)
-    def identity_verifier(self, settings: AuthenticationSettings) -> IdentityVerifier:
-        return FakeIdentityVerifier()
+    def google_oauth_provider(self) -> GoogleOAuthProvider:
+        return FakeGoogleOAuthProvider()
 
 
 def _build_container() -> AsyncContainer:
@@ -101,10 +100,23 @@ async def client(container: AsyncContainer) -> AsyncIterator[AsyncClient]:
         yield http_client
 
 
+async def login_with_google(client: AsyncClient, *, code: str) -> AsyncClient:
+    login_response = await client.get(
+        "/api/v1/auth/google/login", follow_redirects=False
+    )
+    assert login_response.status_code == 307
+
+    redirect_query = parse_qs(urlsplit(login_response.headers["location"]).query)
+    state = redirect_query["state"][0]
+
+    callback_response = await client.get(
+        "/api/v1/auth/google/callback",
+        params={"code": code, "state": state},
+    )
+    assert callback_response.status_code == 200
+    return client
+
+
 @pytest.fixture
 async def authenticated_client(client: AsyncClient) -> AsyncClient:
-    response = await client.post(
-        "/api/v1/auth/google", json={"credential": "user-1"}
-    )
-    assert response.status_code == 200
-    return client
+    return await login_with_google(client, code="user-1")

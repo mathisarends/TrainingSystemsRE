@@ -1,5 +1,5 @@
 from datetime import UTC, datetime, timedelta
-from typing import TypedDict
+from typing import TypedDict, cast
 from uuid import UUID
 
 import jwt
@@ -70,10 +70,13 @@ class JwtTokenIssuer(TokenIssuer):
 
     def _decode(self, token: str) -> _JwtPayload:
         try:
-            return jwt.decode(
-                token,
-                self._settings.jwt_secret,
-                algorithms=[self._settings.jwt_algorithm],
+            return cast(
+                _JwtPayload,
+                jwt.decode(
+                    token,
+                    self._settings.jwt_secret,
+                    algorithms=[self._settings.jwt_algorithm],
+                ),
             )
         except jwt.ExpiredSignatureError as exc:
             raise SessionExpiredException("Token has expired") from exc

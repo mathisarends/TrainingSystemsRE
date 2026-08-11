@@ -58,7 +58,7 @@ def _set_cookie(
         value=value,
         httponly=True,
         secure=is_prod,
-        samesite=same_site,
+        samesite=same_site.value,
         path="/",
         max_age=max_age,
     )

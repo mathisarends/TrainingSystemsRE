@@ -39,6 +39,10 @@ from training_system.settings import AppSettings
 
 class AuthenticationProvider(Provider):
     @provide(scope=Scope.APP)
+    def app_settings(self) -> AppSettings:
+        return AppSettings()
+
+    @provide(scope=Scope.APP)
     def auth_settings(self) -> AuthSettings:
         return AuthSettings()
 

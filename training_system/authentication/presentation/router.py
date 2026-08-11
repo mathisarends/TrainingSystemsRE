@@ -1,3 +1,5 @@
+from typing import Any
+
 from dishka.integrations.fastapi import DishkaRoute, FromDishka
 from fastapi import APIRouter, Query, Request, Response, status
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -30,7 +32,9 @@ from training_system.settings import AppSettings
 
 router = APIRouter(prefix="/auth", tags=["authentication"], route_class=DishkaRoute)
 
-_UNAUTHORIZED = {status.HTTP_401_UNAUTHORIZED: {"model": ErrorResponse}}
+_UNAUTHORIZED: dict[int | str, dict[str, Any]] = {
+    status.HTTP_401_UNAUTHORIZED: {"model": ErrorResponse}
+}
 
 
 @router.get(

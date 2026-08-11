@@ -1,5 +1,6 @@
 from datetime import datetime
 from enum import StrEnum
+from typing import Self
 from uuid import UUID
 
 from pydantic import AliasChoices, BaseModel, Field, field_validator
@@ -66,9 +67,9 @@ class GoogleCallbackResult(BaseModel):
     error_reason: str | None = None
 
     @classmethod
-    def success(cls, *, session: AuthSession) -> "GoogleCallbackResult":
+    def success(cls, *, session: AuthSession) -> Self:
         return cls(succeeded=True, session=session)
 
     @classmethod
-    def error(cls, *, reason: str) -> "GoogleCallbackResult":
+    def error(cls, *, reason: str) -> Self:
         return cls(succeeded=False, error_reason=reason)

@@ -23,7 +23,7 @@ class AuthSettings(BaseSettings):
 
     frontend_base_url: str = "http://localhost:5173"
 
-    jwt_secret: str = "dev-secret-change-me"
+    jwt_secret: str = "dev-secret-change-me-dev-secret-change-me"
     jwt_algorithm: JwtAlgorithm = JwtAlgorithm.HS256
     jwt_access_token_expire_minutes: int = 15
     jwt_refresh_token_expire_days: int = 30

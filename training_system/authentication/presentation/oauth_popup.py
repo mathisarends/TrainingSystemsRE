@@ -27,6 +27,7 @@ class OAuthPopupResponse:
 
         payload_js = json.dumps(payload)
         target_origin_js = json.dumps(target_origin)
+        post_message = f"window.opener.postMessage({payload_js}, {target_origin_js});"
         return HTMLResponse(
             content=f"""<!DOCTYPE html>
 <html lang="en">
@@ -35,7 +36,7 @@ class OAuthPopupResponse:
 <script>
   (function () {{
     if (window.opener) {{
-      try {{ window.opener.postMessage({payload_js}, {target_origin_js}); }} catch (e) {{}}
+      try {{ {post_message} }} catch (e) {{}}
     }}
     window.close();
   }})();
