@@ -4,88 +4,96 @@ Transcribed from Features.md's default-catalog table (the internal
 "- Bitte Auswählen -" placeholder is intentionally excluded).
 """
 
+from enum import StrEnum
+
 from training_system.features.exercises.domain.entities import CategoryDefaults
 
-AVAILABLE_CATEGORIES: tuple[str, ...] = (
-    "Squat",
-    "Bench",
-    "Deadlift",
-    "Overheadpress",
-    "Chest",
-    "Back",
-    "Shoulder",
-    "Triceps",
-    "Biceps",
-    "Legs",
-)
+
+class ExerciseCategory(StrEnum):
+    SQUAT = "Squat"
+    BENCH = "Bench"
+    DEADLIFT = "Deadlift"
+    OVERHEADPRESS = "Overheadpress"
+    CHEST = "Chest"
+    BACK = "Back"
+    SHOULDER = "Shoulder"
+    TRICEPS = "Triceps"
+    BICEPS = "Biceps"
+    LEGS = "Legs"
+
+
+AVAILABLE_CATEGORIES: tuple[ExerciseCategory, ...] = tuple(ExerciseCategory)
 
 DEFAULT_CATEGORY_DEFAULTS: tuple[CategoryDefaults, ...] = (
-    CategoryDefaults("Squat", 240, 3, 7, 7.5),
-    CategoryDefaults("Bench", 180, 4, 8, 8.0),
-    CategoryDefaults("Deadlift", 240, 3, 6, 7.0),
-    CategoryDefaults("Overheadpress", 150, 3, 10, 8.5),
-    CategoryDefaults("Chest", 120, 3, 12, 8.5),
-    CategoryDefaults("Back", 120, 3, 12, 8.5),
-    CategoryDefaults("Shoulder", 90, 3, 12, 8.5),
-    CategoryDefaults("Triceps", 90, 3, 12, 8.5),
-    CategoryDefaults("Biceps", 90, 3, 12, 8.5),
-    CategoryDefaults("Legs", 120, 3, 12, 8.5),
+    CategoryDefaults(ExerciseCategory.SQUAT, 240, 3, 7, 7.5),
+    CategoryDefaults(ExerciseCategory.BENCH, 180, 4, 8, 8.0),
+    CategoryDefaults(ExerciseCategory.DEADLIFT, 240, 3, 6, 7.0),
+    CategoryDefaults(ExerciseCategory.OVERHEADPRESS, 150, 3, 10, 8.5),
+    CategoryDefaults(ExerciseCategory.CHEST, 120, 3, 12, 8.5),
+    CategoryDefaults(ExerciseCategory.BACK, 120, 3, 12, 8.5),
+    CategoryDefaults(ExerciseCategory.SHOULDER, 90, 3, 12, 8.5),
+    CategoryDefaults(ExerciseCategory.TRICEPS, 90, 3, 12, 8.5),
+    CategoryDefaults(ExerciseCategory.BICEPS, 90, 3, 12, 8.5),
+    CategoryDefaults(ExerciseCategory.LEGS, 120, 3, 12, 8.5),
 )
 
-# (category, name, max_factor)
-DEFAULT_EXERCISES: tuple[tuple[str, str, float | None], ...] = (
-    ("Squat", "Lowbar - Squat", None),
-    ("Squat", "Highbar - Squat", None),
-    ("Squat", "Paused Squat", 0.875),
-    ("Squat", "Tempo Squat (3:1:0)", 0.875),
-    ("Squat", "Hack-Squat", 1.5),
-    ("Squat", "Bulgurian Split Squats", 0.0),
-    ("Squat", "Legpress", 2.0),
-    ("Bench", "Comp. Bench", None),
-    ("Bench", "Larsen Press", 0.95),
-    ("Bench", "Close Grip Bench", 0.95),
-    ("Bench", "Spoto Bench", None),
-    ("Bench", "Tempo Bench", 0.95),
-    ("Bench", "3ct Pause Bench", 0.95),
-    ("Bench", "Chestpress", 1.1),
-    ("Bench", "Incline Press", 1.1),
-    ("Deadlift", "Conventional", None),
-    ("Deadlift", "Sumo", None),
-    ("Deadlift", "Paused Deadlift", 0.9),
-    ("Deadlift", "Deficit Deadlift", 0.9),
-    ("Deadlift", "RDLs", 0.825),
-    ("Deadlift", "B-Stance RDLs", 0.0),
-    ("Deadlift", "Stiff-Leg DL", 0.825),
-    ("Overheadpress", "Overheadpress", None),
-    ("Overheadpress", "Push-Press", None),
-    ("Overheadpress", "Dumbell Overheadpress", None),
-    ("Overheadpress", "Shoulderpress", None),
-    ("Chest", "Dips", None),
-    ("Chest", "Butterfly", None),
-    ("Chest", "Deficit Pushups", None),
-    ("Back", "Pull-Up", None),
-    ("Back", "Dumbell Row", None),
-    ("Back", "Pulldowns (wide-grip)", None),
-    ("Back", "Pulldowns (close-grip)", None),
-    ("Back", "T-Bar Row", None),
-    ("Back", "Chestsupported Row", None),
-    ("Shoulder", "Reverse Flyes", None),
-    ("Shoulder", "Lateral Raise", None),
-    ("Shoulder", "Facepulls", None),
-    ("Shoulder", "Upright Rows", None),
-    ("Shoulder", "Front-Raises", None),
-    ("Triceps", "Triceps-Extensions", None),
-    ("Triceps", "French-Press Flat", None),
-    ("Triceps", "Cable-Pushdowns", None),
-    ("Triceps", "Diamond Pushups", None),
-    ("Biceps", "Biceps-Curls", None),
-    ("Biceps", "Cable Curls", None),
-    ("Biceps", "Hammer Curls", None),
-    ("Legs", "Hip Thrusts", None),
-    ("Legs", "Hyperextensions", None),
-    ("Legs", "Leg Extension", None),
-    ("Legs", "Leg Curl", None),
-    ("Legs", "Calf Raises", None),
-    ("Legs", "Hip Adduction", None),
-    ("Legs", "Hip Abduction", None),
+ExerciseName = str
+MaxFactor = float | None
+DefaultExercise = tuple[ExerciseCategory, ExerciseName, MaxFactor]
+
+DEFAULT_EXERCISES: tuple[DefaultExercise, ...] = (
+    (ExerciseCategory.SQUAT, "Lowbar - Squat", None),
+    (ExerciseCategory.SQUAT, "Highbar - Squat", None),
+    (ExerciseCategory.SQUAT, "Paused Squat", 0.875),
+    (ExerciseCategory.SQUAT, "Tempo Squat (3:1:0)", 0.875),
+    (ExerciseCategory.SQUAT, "Hack-Squat", 1.5),
+    (ExerciseCategory.SQUAT, "Bulgurian Split Squats", 0.0),
+    (ExerciseCategory.SQUAT, "Legpress", 2.0),
+    (ExerciseCategory.BENCH, "Comp. Bench", None),
+    (ExerciseCategory.BENCH, "Larsen Press", 0.95),
+    (ExerciseCategory.BENCH, "Close Grip Bench", 0.95),
+    (ExerciseCategory.BENCH, "Spoto Bench", None),
+    (ExerciseCategory.BENCH, "Tempo Bench", 0.95),
+    (ExerciseCategory.BENCH, "3ct Pause Bench", 0.95),
+    (ExerciseCategory.BENCH, "Chestpress", 1.1),
+    (ExerciseCategory.BENCH, "Incline Press", 1.1),
+    (ExerciseCategory.DEADLIFT, "Conventional", None),
+    (ExerciseCategory.DEADLIFT, "Sumo", None),
+    (ExerciseCategory.DEADLIFT, "Paused Deadlift", 0.9),
+    (ExerciseCategory.DEADLIFT, "Deficit Deadlift", 0.9),
+    (ExerciseCategory.DEADLIFT, "RDLs", 0.825),
+    (ExerciseCategory.DEADLIFT, "B-Stance RDLs", 0.0),
+    (ExerciseCategory.DEADLIFT, "Stiff-Leg DL", 0.825),
+    (ExerciseCategory.OVERHEADPRESS, "Overheadpress", None),
+    (ExerciseCategory.OVERHEADPRESS, "Push-Press", None),
+    (ExerciseCategory.OVERHEADPRESS, "Dumbell Overheadpress", None),
+    (ExerciseCategory.OVERHEADPRESS, "Shoulderpress", None),
+    (ExerciseCategory.CHEST, "Dips", None),
+    (ExerciseCategory.CHEST, "Butterfly", None),
+    (ExerciseCategory.CHEST, "Deficit Pushups", None),
+    (ExerciseCategory.BACK, "Pull-Up", None),
+    (ExerciseCategory.BACK, "Dumbell Row", None),
+    (ExerciseCategory.BACK, "Pulldowns (wide-grip)", None),
+    (ExerciseCategory.BACK, "Pulldowns (close-grip)", None),
+    (ExerciseCategory.BACK, "T-Bar Row", None),
+    (ExerciseCategory.BACK, "Chestsupported Row", None),
+    (ExerciseCategory.SHOULDER, "Reverse Flyes", None),
+    (ExerciseCategory.SHOULDER, "Lateral Raise", None),
+    (ExerciseCategory.SHOULDER, "Facepulls", None),
+    (ExerciseCategory.SHOULDER, "Upright Rows", None),
+    (ExerciseCategory.SHOULDER, "Front-Raises", None),
+    (ExerciseCategory.TRICEPS, "Triceps-Extensions", None),
+    (ExerciseCategory.TRICEPS, "French-Press Flat", None),
+    (ExerciseCategory.TRICEPS, "Cable-Pushdowns", None),
+    (ExerciseCategory.TRICEPS, "Diamond Pushups", None),
+    (ExerciseCategory.BICEPS, "Biceps-Curls", None),
+    (ExerciseCategory.BICEPS, "Cable Curls", None),
+    (ExerciseCategory.BICEPS, "Hammer Curls", None),
+    (ExerciseCategory.LEGS, "Hip Thrusts", None),
+    (ExerciseCategory.LEGS, "Hyperextensions", None),
+    (ExerciseCategory.LEGS, "Leg Extension", None),
+    (ExerciseCategory.LEGS, "Leg Curl", None),
+    (ExerciseCategory.LEGS, "Calf Raises", None),
+    (ExerciseCategory.LEGS, "Hip Adduction", None),
+    (ExerciseCategory.LEGS, "Hip Abduction", None),
 )
