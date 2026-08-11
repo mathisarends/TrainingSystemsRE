@@ -20,7 +20,7 @@ from training_system.infrastructure.database.models import DatabaseModel
 from training_system.infrastructure.database.orm import register_models
 from training_system.infrastructure.database.provider import DatabaseProvider
 from training_system.infrastructure.scheduler.provider import SchedulerProvider
-from training_system.main import FEATURES, register_features
+from training_system.wiring import FEATURES, register_features
 from training_system.settings import DatabaseSettings
 
 register_models()
