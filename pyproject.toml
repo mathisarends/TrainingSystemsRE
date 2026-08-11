@@ -9,7 +9,8 @@ dependencies = [
     "asyncpg>=0.30",
     "dishka>=1.6",
     "fastapi>=0.115",
-    "google-auth>=2.36",
+    "httpx>=0.28",
+    "pyjwt>=2.9",
     "pydantic-settings>=2.8",
     "pywebpush>=2.0",
     "sqlmodel>=0.0.24",
@@ -19,7 +20,6 @@ dependencies = [
 [dependency-groups]
 dev = [
     "aiosqlite>=0.21",
-    "httpx>=0.28",
     "mypy>=1.15",
     "pytest>=8.3",
     "pytest-asyncio>=0.25",
