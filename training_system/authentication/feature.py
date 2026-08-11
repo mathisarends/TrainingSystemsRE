@@ -1,7 +1,7 @@
 from training_system.authentication.infrastructure.provider import (
     AuthenticationProvider,
 )
-from training_system.authentication.presentation.errors import (
+from training_system.authentication.presentation.exception_handlers import (
     register_exception_handlers,
 )
 from training_system.authentication.presentation.router import router

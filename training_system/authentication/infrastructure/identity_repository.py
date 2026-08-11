@@ -17,6 +17,7 @@ class SqlAuthIdentityRepository(AuthIdentityRepository):
             user_id=model.user_id,
             provider=model.provider,
             subject=model.subject,
+            password_hash=model.password_hash,
         )
 
     async def find_by_provider_subject(
@@ -37,6 +38,7 @@ class SqlAuthIdentityRepository(AuthIdentityRepository):
                 user_id=identity.user_id,
                 provider=identity.provider,
                 subject=identity.subject,
+                password_hash=identity.password_hash,
             )
         )
         await self._session.flush()
