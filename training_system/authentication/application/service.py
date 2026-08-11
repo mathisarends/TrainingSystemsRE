@@ -55,9 +55,12 @@ class AuthService:
         return LoginResult(user=user, session=session)
 
     async def _register_new_user(self, verified: VerifiedIdentity) -> User:
-        picture_url = verified.picture_url or self._default_picture_url(verified.name)
         user = await self._user_repository.save(
-            user=User(name=verified.name, email=verified.email, picture_url=picture_url)
+            user=User(
+                name=verified.name,
+                email=verified.email,
+                picture_url=verified.picture_url,
+            )
         )
         identity = AuthIdentity(
             user_id=user.id, provider=GOOGLE_PROVIDER, subject=verified.subject
@@ -65,11 +68,6 @@ class AuthService:
         await self._identity_repository.save(identity=identity)
         await self._catalog_service.seed_defaults(user_id=user.id)
         return user
-
-    @staticmethod
-    def _default_picture_url(name: str) -> str:
-        initial = name.strip()[:1].upper() or "U"
-        return f"/images/profile/{initial}.webp"
 
     async def logout(self, *, token: str) -> None:
         await self._session_store.delete(token=token)
