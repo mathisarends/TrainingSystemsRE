@@ -1,4 +1,3 @@
-from dataclasses import dataclass, field
 from enum import StrEnum
 from uuid import UUID
 
@@ -16,29 +15,50 @@ class ExerciseCategory(StrEnum):
     LEGS = "Legs"
 
 
-@dataclass(frozen=True, slots=True)
 class CategoryDefaults:
-    category: ExerciseCategory
-    rest_seconds: int
-    default_sets: int
-    default_reps: int
-    default_target_rpe: float
+    def __init__(
+        self,
+        category: ExerciseCategory,
+        rest_seconds: int,
+        default_sets: int,
+        default_reps: int,
+        default_target_rpe: float,
+    ) -> None:
+        self.category = category
+        self.rest_seconds = rest_seconds
+        self.default_sets = default_sets
+        self.default_reps = default_reps
+        self.default_target_rpe = default_target_rpe
 
 
-@dataclass(frozen=True, slots=True)
 class CatalogExercise:
-    id: UUID
-    category: ExerciseCategory
-    name: str
-    position: int
-    max_factor: float | None = None
+    def __init__(
+        self,
+        *,
+        id: UUID,
+        category: ExerciseCategory,
+        name: str,
+        position: int,
+        max_factor: float | None = None,
+    ) -> None:
+        self.id = id
+        self.category = category
+        self.name = name
+        self.position = position
+        self.max_factor = max_factor
 
 
-@dataclass(slots=True)
 class ExerciseCatalog:
-    user_id: UUID
-    categories: list[CategoryDefaults] = field(default_factory=list)
-    exercises: list[CatalogExercise] = field(default_factory=list)
+    def __init__(
+        self,
+        *,
+        user_id: UUID,
+        categories: list[CategoryDefaults] | None = None,
+        exercises: list[CatalogExercise] | None = None,
+    ) -> None:
+        self.user_id = user_id
+        self.categories = categories if categories is not None else []
+        self.exercises = exercises if exercises is not None else []
 
     def exercises_in(self, category: ExerciseCategory) -> list[CatalogExercise]:
         return sorted(

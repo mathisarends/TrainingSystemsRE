@@ -1,30 +1,50 @@
-from dataclasses import dataclass, field
 from datetime import datetime
 
 MAX_HISTORY = 10
 
 
-@dataclass(frozen=True, slots=True)
 class RecordSnapshot:
-    sets: int
-    reps: int
-    weight: float
-    actual_rpe: float
-    est_max: float
-    achieved_at: datetime
+    def __init__(
+        self,
+        *,
+        sets: int,
+        reps: int,
+        weight: float,
+        actual_rpe: float,
+        est_max: float,
+        achieved_at: datetime,
+    ) -> None:
+        self.sets = sets
+        self.reps = reps
+        self.weight = weight
+        self.actual_rpe = actual_rpe
+        self.est_max = est_max
+        self.achieved_at = achieved_at
 
 
-@dataclass(slots=True)
 class PersonalRecord:
-    exercise_name: str
-    category: str
-    sets: int
-    reps: int
-    weight: float
-    actual_rpe: float
-    est_max: float
-    achieved_at: datetime
-    history: list[RecordSnapshot] = field(default_factory=list)
+    def __init__(
+        self,
+        *,
+        exercise_name: str,
+        category: str,
+        sets: int,
+        reps: int,
+        weight: float,
+        actual_rpe: float,
+        est_max: float,
+        achieved_at: datetime,
+        history: list[RecordSnapshot] | None = None,
+    ) -> None:
+        self.exercise_name = exercise_name
+        self.category = category
+        self.sets = sets
+        self.reps = reps
+        self.weight = weight
+        self.actual_rpe = actual_rpe
+        self.est_max = est_max
+        self.achieved_at = achieved_at
+        self.history = history if history is not None else []
 
     def replace_with(self, snapshot: RecordSnapshot, *, category: str) -> None:
         previous = RecordSnapshot(

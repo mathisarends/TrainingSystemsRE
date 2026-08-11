@@ -1,4 +1,3 @@
-from dataclasses import dataclass, field
 from datetime import UTC, date, datetime
 from uuid import UUID, uuid4
 
@@ -14,36 +13,65 @@ MINIMUM_RECORDED_MINUTES = 30
 DURATION_ROUNDING_MINUTES = 5
 
 
-@dataclass(slots=True)
 class Entry:
-    id: UUID
-    category: str
-    exercise_name: str
-    sets: int
-    reps: int
-    target_rpe: float
-    weight: float | None = None
-    actual_rpe: float | None = None
-    est_max: float | None = None
-    notes: str | None = None
+    def __init__(
+        self,
+        *,
+        id: UUID,
+        category: str,
+        exercise_name: str,
+        sets: int,
+        reps: int,
+        target_rpe: float,
+        weight: float | None = None,
+        actual_rpe: float | None = None,
+        est_max: float | None = None,
+        notes: str | None = None,
+    ) -> None:
+        self.id = id
+        self.category = category
+        self.exercise_name = exercise_name
+        self.sets = sets
+        self.reps = reps
+        self.target_rpe = target_rpe
+        self.weight = weight
+        self.actual_rpe = actual_rpe
+        self.est_max = est_max
+        self.notes = notes
 
 
-@dataclass(slots=True)
 class Day:
-    id: UUID
-    day_index: int
-    entries: list[Entry] = field(default_factory=list)
-    start_time: datetime | None = None
-    end_time: datetime | None = None
-    duration_minutes: int | None = None
-    is_recording: bool = False
+    def __init__(
+        self,
+        *,
+        id: UUID,
+        day_index: int,
+        entries: list[Entry] | None = None,
+        start_time: datetime | None = None,
+        end_time: datetime | None = None,
+        duration_minutes: int | None = None,
+        is_recording: bool = False,
+    ) -> None:
+        self.id = id
+        self.day_index = day_index
+        self.entries = entries if entries is not None else []
+        self.start_time = start_time
+        self.end_time = end_time
+        self.duration_minutes = duration_minutes
+        self.is_recording = is_recording
 
 
-@dataclass(slots=True)
 class Week:
-    id: UUID
-    week_index: int
-    days: list[Day] = field(default_factory=list)
+    def __init__(
+        self,
+        *,
+        id: UUID,
+        week_index: int,
+        days: list[Day] | None = None,
+    ) -> None:
+        self.id = id
+        self.week_index = week_index
+        self.days = days if days is not None else []
 
 
 def _new_day(day_index: int) -> Day:
