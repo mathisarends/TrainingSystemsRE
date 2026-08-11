@@ -1,6 +1,6 @@
 # TrainingSystems
 
-A personal periodized-training backend: Google sign-in, exercise catalogs, training
+A personal periodized-training backend: Google/password sign-in, exercise catalogs, training
 plans (weeks/days/entries) with RPE progression and deload, automatic
 training-session detection, body weight tracking, personal records, and web push
 notifications.
@@ -20,7 +20,8 @@ feature). See `SPEC.md` for the full API specification.
 
 ```bash
 cp .env.example .env
-# fill in AUTHENTICATION_GOOGLE_CLIENT_ID and PUSH_VAPID_* (see below)
+# fill in AUTHENTICATION_JWT_SECRET, GOOGLE_CLIENT_ID/CLIENT_SECRET/REDIRECT_URI,
+# and PUSH_VAPID_* (see below)
 
 uv sync
 docker compose up -d db
@@ -48,7 +49,7 @@ network with `DATABASE_URL=postgresql+asyncpg://training:training@localhost:5432
 ## Development
 
 ```bash
-uv run pytest       # httpx ASGITransport tests, in-memory SQLite, fake Google verifier
+uv run pytest       # httpx ASGITransport tests, in-memory SQLite, fake Google OAuth provider
 uv run ruff check .
 uv run mypy --strict training_system
 ```
@@ -71,7 +72,7 @@ training_system/
 ├── domain/                  # shared Entity/Aggregate base
 ├── infrastructure/          # database (SqlRepository, orm.py) + scheduler providers
 ├── presentation/            # Feature composition dataclass, base Schema, /health
-├── authentication/          # Google sign-in, opaque session cookies
+├── authentication/          # Google OAuth redirect flow + password auth, JWT access/refresh cookies
 └── features/
     ├── users/                # GET/PATCH/DELETE /me
     ├── exercises/            # exercise catalog
