@@ -106,23 +106,6 @@ class PlanEntryModel(DatabaseModel, table=True):
     notes: str | None = None
 
 
-class BodyWeightEntryModel(DatabaseModel, table=True):
-    __tablename__ = "body_weight_entries"
-    __table_args__ = (UniqueConstraint("user_id", "date"),)
-
-    user_id: UUID = Field(index=True, foreign_key="users.id")
-    date: date
-    weight: float
-
-
-class BodyWeightGoalModel(DatabaseModel, table=True):
-    __tablename__ = "body_weight_goals"
-
-    user_id: UUID = Field(unique=True, index=True, foreign_key="users.id")
-    direction: str = Field(max_length=20)
-    rate: float
-
-
 class PersonalRecordModel(DatabaseModel, table=True):
     __tablename__ = "personal_records"
     __table_args__ = (UniqueConstraint("user_id", "exercise_name"),)

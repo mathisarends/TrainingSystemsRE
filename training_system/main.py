@@ -7,7 +7,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from training_system.authentication.feature import feature as authentication_feature
-from training_system.features.bodyweight.feature import feature as bodyweight_feature
 from training_system.features.exercises.feature import feature as exercises_feature
 from training_system.features.notifications.feature import (
     feature as notifications_feature,
@@ -30,7 +29,6 @@ FEATURES = (
     users_feature,
     exercises_feature,
     plans_feature,
-    bodyweight_feature,
     records_feature,
     push_feature,
     notifications_feature,

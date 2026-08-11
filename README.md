@@ -76,7 +76,6 @@ training_system/
     ├── users/                # GET/PATCH/DELETE /me
     ├── exercises/            # exercise catalog
     ├── plans/                # training plans, RPE progression, session tracking
-    ├── bodyweight/           # body weight entries + goal
     ├── records/              # personal records
     ├── push/                 # web push subscriptions + sender
     ├── notifications/        # unseen training-session completions
